@@ -42,7 +42,7 @@ class AnniversaryAnimation {
         this.monthText = document.getElementById('month-text');
         this.blackTransition = document.getElementById('black-transition');
         this.transitionMonthText = document.getElementById('transition-month-text');
-        this.progressBar = document.getElementById('progress-bar');
+
         this.backgroundMusic = document.getElementById('background-music');
         this.isFirstMonth = true;
         this.starAnimations = [];
@@ -64,16 +64,19 @@ class AnniversaryAnimation {
     }
     
     calculatePanDistance() {
-        const imageHeight = 2000; // Height of pan.png
+        const containerHeight = 2000; // Height of .pan-image container
         const viewportHeight = window.innerHeight;
         const bottomOffset = 20; // 20px from bottom
         
-        // Calculate how much to translate so bottom of screen is 20px from bottom of image
-        const translateDistance = -(imageHeight - viewportHeight - bottomOffset);
+        // Calculate how much to translate to show the bottom portion
+        // We want to move the container up so its bottom is near the viewport bottom
+        const translateDistance = -(containerHeight - viewportHeight - bottomOffset);
         
-        // Ensure we don't translate more than necessary (bounds checking)
-        // If viewport is larger than image, don't translate at all
-        return Math.min(0, translateDistance);
+        // Always pan at least 50% of the container height for desktop
+        const minPanDistance = -(containerHeight * 0.5);
+        
+        // Use whichever gives more panning (more negative value)
+        return Math.min(minPanDistance, translateDistance);
     }
     
     getRandomStartPosition() {
@@ -179,6 +182,11 @@ class AnniversaryAnimation {
         if (this.isAnimating) return;
         this.isAnimating = true;
         
+        // Clear any existing month interval from previous runs
+        if (this.monthInterval) {
+            clearInterval(this.monthInterval);
+        }
+        
         // Disable and fade out the button immediately
         this.playButton.disabled = true;
         
@@ -192,31 +200,23 @@ class AnniversaryAnimation {
         this.playMusicWithFadeIn();
         
         // Start the pan down effect after 1 second delay
-            // Calculate dynamic pan distance based on screen size
-            const translateDistance = this.calculatePanDistance();
-            
-            // Pan the image down to reveal the bottom
-            this.panImage.style.transform = `translateY(${translateDistance}px)`;
+        // Calculate dynamic pan distance based on screen size
+        const translateDistance = this.calculatePanDistance();
         
-        // Simple transition at the end of pan - just fade in black screen with month
+        // Pan the image down to reveal the bottom
+        this.panImage.style.transform = `translateY(${translateDistance}px)`;
+        
+        // Smooth transition at the end of pan
         setTimeout(() => {
-            // Switch containers
-            this.animationContainer.classList.remove('hidden');
-            this.skyTransition.style.display = 'none';
-            this.landingPage.style.display = 'none';
+            // Switch containers first
+            this.skyTransition.style.opacity = '0';
+            this.landingPage.style.opacity = '0';
             
-            // Set month text and fade in black screen
-            this.transitionMonthText.textContent = this.months[0];
-            this.blackTransition.style.visibility = 'visible';
-            this.blackTransition.classList.add('fade-in');
-            
-            // Show the month text on the black screen
             setTimeout(() => {
-                this.transitionMonthText.classList.add('show');
-            }, 500);
-            
-            this.startMonthSequence();
-        }, 11700);
+                this.animationContainer.classList.remove('hidden');
+                this.startMonthSequence();
+            }, 2000);
+        }, 9500);
     }
     
     playMusicWithFadeIn() {
@@ -228,8 +228,8 @@ class AnniversaryAnimation {
             console.log('Audio play failed:', error);
         });
         
-        // Fade in over 3 seconds
-        const fadeInDuration = 3000; // 3 seconds
+        // Fade in over 6 seconds
+        const fadeInDuration = 6000; // 6 seconds
         const targetVolume = 0.7; // Maximum volume (70%)
         const fadeInSteps = 60; // 60 steps for smooth fade
         const volumeIncrement = targetVolume / fadeInSteps;
@@ -249,7 +249,6 @@ class AnniversaryAnimation {
     startMonthSequence() {
         // Continue with the first month transition that was started manually
         this.continueFirstMonthTransition();
-        this.updateProgressBar();
         
         // Set up interval for month transitions (now includes black screen time)
         this.monthInterval = setInterval(() => {
@@ -266,13 +265,13 @@ class AnniversaryAnimation {
     
     continueFirstMonthTransition() {
         const monthName = this.months[0];
+
+        this.monthText.textContent = monthName;
+        this.monthOverlay.classList.add('show');
+        this.blackTransition.style.transition = 'opacity 0s ease-in-out';
+        this.blackTransition.style.opacity = '1';
         
-        // Show month text on black screen immediately (already opaque)
-        setTimeout(() => {
-            this.transitionMonthText.classList.add('show');
-        }, 100);
-        
-        // Update background when ready
+        // Update background when black screen is fully opaque (after 1s fade + some buffer)
         setTimeout(() => {
             this.updateBackground(1);
             // Show character after first month's background is set
@@ -280,79 +279,78 @@ class AnniversaryAnimation {
                 this.character.classList.add('show');
                 this.isFirstMonth = false;
             }
-        }, 500);
+        }, 1500);
+        
+        setTimeout(() => {
+            this.blackTransition.style.transition = 'opacity 1s ease-in-out';
+            this.blackTransition.style.opacity = '0';
+        }, 2000);
+        
+        // Hide transition text slightly after scene text appears
+        setTimeout(() => {
+            this.transitionMonthText.classList.remove('show');
+        }, 4000);
+        
+        // Reset black screen for future transitions and hide month overlay
+        setTimeout(() => {
+            this.blackTransition.style.transition = '';
+            this.blackTransition.style.opacity = '';
+            this.blackTransition.style.visibility = '';
+            this.monthOverlay.classList.remove('show');
+        }, 6000);
+    }
+
+    showMonthWithTransition(monthIndex) {
+        const monthName = this.months[monthIndex];
+        
+        // Start black screen fade-in transition (same as first month)
+        this.blackTransition.style.visibility = 'visible';
+        this.blackTransition.style.opacity = '0';
+        this.blackTransition.style.transition = 'opacity 1s ease-in-out';
+        this.transitionMonthText.textContent = monthName;
+        
+        // Fade in black screen
+        setTimeout(() => {
+            this.blackTransition.style.opacity = '1';
+        }, 100);
+        
+        // Show month text on black screen during fade in
+        setTimeout(() => {
+            this.transitionMonthText.classList.add('show');
+        }, 800);
+        
+        // Update background when black screen is fully opaque
+        setTimeout(() => {
+            this.updateBackground(monthIndex + 1);
+        }, 1500);
         
         // Start fading out black screen
         setTimeout(() => {
+            this.blackTransition.style.transition = 'opacity 1s ease-in-out';
             this.blackTransition.style.opacity = '0';
-        }, 1200);
+        }, 2500);
         
         // Show month overlay on scene as black screen fades
         setTimeout(() => {
             this.monthText.textContent = monthName;
             this.monthOverlay.classList.add('show');
-        }, 1400);
+        }, 3000);
         
         // Hide transition text slightly after scene text appears
         setTimeout(() => {
             this.transitionMonthText.classList.remove('show');
-        }, 1800);
+        }, 3400);
         
-        // Reset black screen for future transitions and hide month overlay
-        setTimeout(() => {
-            this.blackTransition.style.opacity = '';
-            this.blackTransition.style.visibility = '';
-            this.monthOverlay.classList.remove('show');
-        }, 4800);
-    }
-    
-    showMonthWithTransition(monthIndex) {
-        const monthName = this.months[monthIndex];
-        
-        // Start black screen transition
-        this.transitionMonthText.textContent = monthName;
-        this.blackTransition.classList.add('fade-in');
-        
-        // Show month text on black screen after fade in
-        setTimeout(() => {
-            this.transitionMonthText.classList.add('show');
-        }, 400);
-        
-        // Update background when black screen is fully opaque
-        setTimeout(() => {
-            this.updateBackground(monthIndex + 1);
-            // Show character after first month's background is set
-            if (this.isFirstMonth) {
-                this.character.classList.add('show');
-                this.isFirstMonth = false;
-            }
-        }, 1000);
-        
-        // Start fading out black screen (reduced by 300ms)
-        setTimeout(() => {
-            this.blackTransition.classList.remove('fade-in');
-        }, 1700);
-        
-        // Show month overlay on scene as black screen fades (adjusted timing)
-        setTimeout(() => {
-            this.monthText.textContent = monthName;
-            this.monthOverlay.classList.add('show');
-        }, 1900);
-        
-        // Hide transition text slightly after scene text appears (adjusted timing)
-        setTimeout(() => {
-            this.transitionMonthText.classList.remove('show');
-        }, 2300);
-        
-        // Hide month overlay after displaying for a while
+        // Hide month overlay and reset black screen
         setTimeout(() => {
             this.monthOverlay.classList.remove('show');
-        }, 4800);
+            this.blackTransition.style.visibility = 'hidden';
+            this.blackTransition.style.transition = '';
+        }, 6000);
     }
     
     transitionToNextMonth() {
         this.showMonthWithTransition(this.currentMonth);
-        this.updateProgressBar();
     }
     
     updateBackground(gradientNumber) {
@@ -390,10 +388,7 @@ class AnniversaryAnimation {
         }
     }
     
-    updateProgressBar() {
-        const progress = ((this.currentMonth + 1) / this.months.length) * 100;
-        this.progressBar.style.width = `${progress}%`;
-    }
+
     
     completeAnimation() {
         clearInterval(this.monthInterval);
@@ -501,7 +496,6 @@ class AnniversaryAnimation {
         this.blackTransition.style.opacity = '';
         this.blackTransition.style.visibility = '';
         this.transitionMonthText.classList.remove('show');
-        this.progressBar.style.width = '0%';
         this.character.style.animation = '';
         this.character.classList.remove('show');
         

@@ -10,6 +10,9 @@ body {
     overflow: hidden;
     background: #000;
     height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile */
+    /* Safe area support for mobile devices */
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* Landing Page - Night Sky */
@@ -17,11 +20,15 @@ body {
     position: relative;
     width: 100vw;
     height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile */
     background: linear-gradient(180deg, #0a0a23 0%, #1a1a3e 50%, #2d2d5f 100%);
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: opacity 2s ease-in-out;
     overflow: hidden;
+    /* Ensure content doesn't get hidden behind mobile UI */
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* Pan image container */
@@ -36,7 +43,7 @@ body {
     background-position: center top;
     background-repeat: no-repeat;
     z-index: 1;
-    transition: transform 13s ease-in-out;
+    transition: transform 10.5s ease-in-out;
 }
 
 /* Clean Static Stars */
@@ -46,7 +53,7 @@ body {
     height: 100%;
     overflow: hidden;
     z-index: 2;
-    transition: opacity 2s ease-in-out;
+    transition: opacity 5s ease-in-out;
 }
 
 /* Small static stars background layer */
@@ -159,7 +166,7 @@ body {
     height: 100%;
     overflow: hidden;
     z-index: 3;
-    transition: opacity 2s ease-in-out;
+    transition: opacity 5s ease-in-out;
 }
 
 /* Bright static stars */
@@ -200,7 +207,7 @@ body {
     height: 100%;
     overflow: hidden;
     z-index: 4;
-    transition: opacity 2s ease-in-out;
+    transition: opacity 5s ease-in-out;
 }
 
 /* Special sparkling stars */
@@ -475,8 +482,8 @@ body {
 }
 
 .play-button {
-    background: linear-gradient(45deg, #ff6b6b, #ff8e53);
-    border: none;
+    background: linear-gradient(45deg, #4a90e2, #7b68ee, #9370db);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 50px;
     padding: 20px 40px;
     color: white;
@@ -486,9 +493,12 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
-    box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
+    box-shadow: 
+        0 8px 32px rgba(74, 144, 226, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease, opacity 1s ease-in-out;
-    animation: pulse 2s ease-in-out infinite;
+    animation: celestial-pulse 2s ease-in-out infinite;
+    backdrop-filter: blur(5px);
 }
 
 .play-button:disabled {
@@ -517,7 +527,7 @@ body {
         0 0 15px rgba(255, 255, 255, 0.6), 
         0 0 30px rgba(255, 255, 255, 0.4),
         0 0 50px rgba(255, 255, 255, 0.2);
-    transition: opacity 2s ease-in-out;
+    transition: opacity 5s ease-in-out;
     opacity: 0;
 }
 
@@ -527,16 +537,29 @@ body {
 
 .play-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(255, 107, 107, 0.4);
+    box-shadow: 
+        0 12px 40px rgba(74, 144, 226, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        0 0 20px rgba(147, 112, 219, 0.4);
+    background: linear-gradient(45deg, #5ba0f2, #8b78fe, #a380eb);
 }
 
 .play-icon {
     font-size: 24px;
 }
 
-@keyframes pulse {
-    0%, 100% { box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3); }
-    50% { box-shadow: 0 8px 32px rgba(255, 107, 107, 0.6); }
+@keyframes celestial-pulse {
+    0%, 100% { 
+        box-shadow: 
+            0 8px 32px rgba(74, 144, 226, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    50% { 
+        box-shadow: 
+            0 8px 32px rgba(74, 144, 226, 0.7),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            0 0 15px rgba(147, 112, 219, 0.5);
+    }
 }
 
 /* Animation Container */
@@ -546,7 +569,10 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile */
     transition: opacity 1s ease-in;
+    /* Ensure content doesn't get hidden behind mobile UI */
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 .animation-container.hidden {
@@ -621,24 +647,38 @@ body {
     100% { transform: translateX(-33.33%); }
 }
 
-/* Ground Platform */
+/* Enhanced Ground Platform */
 .ground-platform {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 300%;
     height: 120px;
-    background: linear-gradient(180deg, 
-        rgba(101, 67, 33, 0.8) 0%,     /* Brown earth */
-        rgba(139, 69, 19, 0.9) 40%,    /* Darker brown */
-        rgba(160, 82, 45, 1) 70%,      /* Saddle brown */
-        rgba(139, 69, 19, 1) 100%      /* Dark brown base */
-    );
+    background: 
+        /* Subtle noise texture overlay */
+        radial-gradient(circle at 20% 80%, rgba(160, 82, 45, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(101, 67, 33, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(139, 69, 19, 0.2) 0%, transparent 60%),
+        /* Main soil layering with realistic depth */
+        linear-gradient(180deg, 
+            rgba(85, 57, 28, 0.95) 0%,      /* Rich topsoil */
+            rgba(101, 67, 33, 1) 15%,       /* Brown earth layer */
+            rgba(120, 78, 42, 1) 30%,       /* Medium brown */
+            rgba(139, 69, 19, 1) 50%,       /* Darker brown */
+            rgba(160, 82, 45, 1) 70%,       /* Saddle brown */
+            rgba(101, 56, 24, 1) 85%,       /* Deep earth */
+            rgba(72, 39, 15, 1) 100%        /* Dark subsoil */
+        );
     box-shadow: 
-        inset 0 10px 20px rgba(0,0,0,0.3),
-        0 -5px 15px rgba(0,0,0,0.2);
+        /* Enhanced depth shadows */
+        inset 0 15px 30px rgba(0,0,0,0.4),
+        inset 0 -3px 10px rgba(0,0,0,0.3),
+        0 -8px 20px rgba(0,0,0,0.25),
+        0 -2px 8px rgba(0,0,0,0.15);
     animation: ground-scroll 12s linear infinite;
     z-index: 3;
+    /* Add subtle texture through filter */
+    filter: contrast(1.1) saturate(1.05);
 }
 
 .ground-platform::before {
@@ -647,67 +687,124 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 25px;
+    height: 30px;
     background: 
-        /* Grass blade texture */
-        repeating-linear-gradient(90deg,
+        /* Detailed grass blade texture with natural variation */
+        repeating-linear-gradient(91deg,
             transparent 0px,
-            rgba(34, 139, 34, 0.3) 1px,
-            transparent 2px,
+            rgba(34, 139, 34, 0.4) 0.5px,
+            rgba(46, 125, 50, 0.6) 1px,
+            transparent 1.5px,
+            transparent 3px
+        ),
+        repeating-linear-gradient(89deg,
+            transparent 0px,
+            rgba(56, 142, 60, 0.3) 0.8px,
+            transparent 1.2px,
             transparent 4px
         ),
-        /* Grass height variation */
+        /* Grass density variation with shadows */
         repeating-linear-gradient(45deg,
-            rgba(46, 125, 50, 0.4) 0px,
-            rgba(56, 142, 60, 0.6) 3px,
-            rgba(34, 139, 34, 0.5) 6px,
-            transparent 8px
+            rgba(28, 100, 28, 0.5) 0px,
+            rgba(46, 125, 50, 0.7) 2px,
+            rgba(56, 142, 60, 0.8) 4px,
+            rgba(34, 139, 34, 0.6) 6px,
+            transparent 8px,
+            transparent 12px
         ),
-        /* Base grass color */
+        /* Subtle lighting gradients */
+        linear-gradient(180deg,
+            rgba(76, 175, 80, 0.9) 0%,     /* Lit grass tips */
+            rgba(56, 142, 60, 0.95) 40%,   /* Mid grass */
+            rgba(46, 125, 50, 1) 70%,      /* Grass base */
+            rgba(34, 139, 34, 1) 100%      /* Deep grass roots */
+        ),
+        /* Base grass color with natural variation */
         linear-gradient(90deg, 
-            rgba(34, 139, 34, 0.8) 0%,     /* Forest green grass */
-            rgba(46, 125, 50, 0.9) 20%,    /* Green */
-            rgba(56, 142, 60, 0.7) 40%,    /* Medium green */
-            rgba(76, 175, 80, 0.8) 60%,    /* Light green */
-            rgba(46, 125, 50, 0.9) 80%,    /* Green */
-            rgba(34, 139, 34, 0.8) 100%    /* Forest green */
+            rgba(28, 120, 28, 0.9) 0%,     /* Deep forest green */
+            rgba(34, 139, 34, 0.95) 15%,   /* Forest green */
+            rgba(46, 125, 50, 1) 30%,      /* Rich green */
+            rgba(56, 142, 60, 0.9) 45%,    /* Medium green */
+            rgba(76, 175, 80, 0.85) 60%,   /* Bright green */
+            rgba(56, 142, 60, 0.9) 75%,    /* Medium green */
+            rgba(46, 125, 50, 1) 90%,      /* Rich green */
+            rgba(34, 139, 34, 0.95) 100%   /* Forest green */
         );
-    border-radius: 3px 3px 0 0;
+    border-radius: 4px 4px 0 0;
     box-shadow: 
-        inset 0 -3px 6px rgba(0,0,0,0.2),
-        0 1px 2px rgba(255,255,255,0.1);
+        /* Enhanced grass shadows for depth */
+        inset 0 -4px 8px rgba(0,0,0,0.25),
+        inset 0 2px 4px rgba(255,255,255,0.1),
+        0 1px 3px rgba(255,255,255,0.2),
+        0 -1px 2px rgba(0,0,0,0.1);
+    /* Add subtle texture and lighting */
+    filter: contrast(1.05) brightness(1.02);
 }
 
 .ground-platform::after {
     content: '';
     position: absolute;
-    top: 10px;
+    top: 12px;
     left: 0;
     width: 100%;
-    height: 100px;
+    height: 108px;
     background: 
-        /* Soil texture pattern */
-        repeating-linear-gradient(0deg,
+        /* Complex soil stratification layers */
+        repeating-linear-gradient(2deg,
             transparent 0px,
-            rgba(101, 67, 33, 0.3) 1px,
+            rgba(101, 67, 33, 0.4) 0.8px,
+            rgba(85, 57, 28, 0.3) 1.5px,
             transparent 2px,
+            transparent 8px
+        ),
+        repeating-linear-gradient(-1deg,
+            transparent 0px,
+            rgba(120, 78, 42, 0.3) 1px,
+            transparent 1.8px,
             transparent 6px
         ),
-        /* Rock/pebble texture */
-        repeating-linear-gradient(45deg,
+        /* Enhanced rock and pebble distribution */
+        repeating-linear-gradient(47deg,
             transparent 0px,
-            rgba(160, 82, 45, 0.4) 1px,
+            rgba(160, 82, 45, 0.5) 0.6px,
+            rgba(139, 69, 19, 0.4) 1.2px,
             transparent 2px,
-            transparent 12px
+            transparent 14px
         ),
-        /* Dirt clumps */
-        repeating-linear-gradient(90deg,
-            rgba(139, 69, 19, 0.2) 0px,
-            rgba(160, 82, 45, 0.3) 4px,
-            transparent 8px,
-            transparent 15px
+        repeating-linear-gradient(-43deg,
+            transparent 0px,
+            rgba(101, 56, 24, 0.3) 0.8px,
+            transparent 1.5px,
+            transparent 18px
+        ),
+        /* Dirt clumps and organic matter */
+        repeating-linear-gradient(92deg,
+            rgba(72, 39, 15, 0.25) 0px,
+            rgba(139, 69, 19, 0.35) 3px,
+            rgba(160, 82, 45, 0.4) 6px,
+            rgba(101, 67, 33, 0.3) 9px,
+            transparent 12px,
+            transparent 20px
+        ),
+        /* Subtle moisture variations */
+        repeating-linear-gradient(88deg,
+            transparent 0px,
+            rgba(85, 57, 28, 0.2) 2px,
+            rgba(72, 39, 15, 0.3) 4px,
+            transparent 6px,
+            transparent 25px
+        ),
+        /* Root network traces */
+        repeating-linear-gradient(95deg,
+            transparent 0px,
+            rgba(101, 67, 33, 0.2) 1px,
+            transparent 2px,
+            transparent 30px
         );
     z-index: -1;
+    /* Enhanced soil realism */
+    filter: contrast(1.08) saturate(0.95) brightness(0.98);
+    opacity: 0.9;
 }
 
 /* Ground Detail Elements */
@@ -722,113 +819,218 @@ body {
 
 .rock {
     position: absolute;
-    background: radial-gradient(circle, #696969 0%, #2f4f4f 70%, #191970 100%);
-    border-radius: 50%;
+    background: 
+        /* Highlight and weathering */
+        radial-gradient(ellipse 30% 25% at 35% 25%, rgba(160, 160, 160, 0.6) 0%, transparent 50%),
+        /* Main rock coloring with natural variation */
+        radial-gradient(circle at 40% 30%, #8B7355 0%, #6B5B47 35%, #4A3728 70%, #2F241A 100%);
+    border-radius: 45% 55% 60% 40%;
     box-shadow: 
-        inset -2px -2px 4px rgba(0,0,0,0.5),
-        2px 2px 4px rgba(0,0,0,0.3);
+        /* Enhanced 3D depth */
+        inset -3px -3px 6px rgba(0,0,0,0.6),
+        inset 2px 2px 4px rgba(255,255,255,0.1),
+        3px 3px 8px rgba(0,0,0,0.4),
+        1px 1px 3px rgba(0,0,0,0.3);
+    transform: rotate(var(--rock-rotation, 0deg));
+    filter: contrast(1.1) saturate(0.9);
 }
 
 .rock-1 {
-    width: 6px;
-    height: 4px;
-    top: 15px;
+    width: 7px;
+    height: 5px;
+    top: 14px;
     left: 18%;
+    --rock-rotation: 25deg;
 }
 
 .rock-2 {
-    width: 4px;
-    height: 3px;
-    top: 12px;
+    width: 5px;
+    height: 4px;
+    top: 11px;
     left: 42%;
+    --rock-rotation: -15deg;
 }
 
 .rock-3 {
-    width: 8px;
-    height: 5px;
-    top: 18px;
+    width: 9px;
+    height: 6px;
+    top: 17px;
     left: 67%;
+    --rock-rotation: 45deg;
 }
 
 .rock-4 {
-    width: 3px;
-    height: 2px;
-    top: 14px;
+    width: 4px;
+    height: 3px;
+    top: 13px;
     left: 85%;
+    --rock-rotation: -30deg;
 }
 
 .rock-5 {
-    width: 5px;
-    height: 4px;
-    top: 16px;
+    width: 6px;
+    height: 5px;
+    top: 15px;
     left: 93%;
+    --rock-rotation: 60deg;
 }
 
 .dirt-patch {
     position: absolute;
-    background: radial-gradient(ellipse, rgba(101, 67, 33, 0.6) 0%, transparent 70%);
-    border-radius: 50%;
+    background: 
+        /* Dirt texture variation */
+        radial-gradient(ellipse 40% 60% at 30% 40%, rgba(139, 69, 19, 0.4) 0%, transparent 30%),
+        radial-gradient(ellipse 60% 40% at 70% 60%, rgba(160, 82, 45, 0.3) 0%, transparent 35%),
+        /* Main dirt coloring */
+        radial-gradient(ellipse, rgba(101, 67, 33, 0.7) 0%, rgba(85, 57, 28, 0.5) 40%, transparent 75%);
+    border-radius: 60% 40% 55% 45%;
+    box-shadow: 
+        inset 0 1px 3px rgba(0,0,0,0.3),
+        0 1px 2px rgba(0,0,0,0.2);
+    filter: blur(0.5px) contrast(1.05);
 }
 
 .patch-1 {
-    width: 15px;
-    height: 8px;
-    top: 20px;
+    width: 16px;
+    height: 9px;
+    top: 19px;
     left: 25%;
+    transform: rotate(-8deg);
 }
 
 .patch-2 {
-    width: 12px;
-    height: 6px;
-    top: 22px;
+    width: 13px;
+    height: 7px;
+    top: 21px;
     left: 55%;
+    transform: rotate(12deg);
 }
 
 .patch-3 {
-    width: 18px;
-    height: 10px;
-    top: 19px;
+    width: 19px;
+    height: 11px;
+    top: 18px;
     left: 78%;
+    transform: rotate(-5deg);
 }
 
 .grass-tuft {
     position: absolute;
     width: 3px;
     height: 8px;
-    background: linear-gradient(180deg, 
-        rgba(76, 175, 80, 0.8) 0%,
-        rgba(46, 125, 50, 0.9) 50%,
-        rgba(34, 139, 34, 0.7) 100%
-    );
-    border-radius: 2px 2px 0 0;
-    box-shadow: 1px 0 2px rgba(0,0,0,0.2);
+    background: 
+        /* Grass blade highlights */
+        linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(100, 200, 100, 0.4) 30%, 
+            transparent 60%
+        ),
+        /* Main grass coloring with natural variation */
+        linear-gradient(180deg, 
+            rgba(85, 195, 90, 0.9) 0%,      /* Bright tip */
+            rgba(76, 175, 80, 0.85) 25%,    /* Light green */
+            rgba(56, 142, 60, 0.9) 60%,     /* Medium green */
+            rgba(46, 125, 50, 0.95) 80%,    /* Darker green */
+            rgba(34, 139, 34, 0.8) 100%     /* Deep base */
+        );
+    border-radius: 40% 60% 0 0;
+    box-shadow: 
+        1px 0 3px rgba(0,0,0,0.25),
+        inset 1px 0 2px rgba(255,255,255,0.2);
+    transform: rotate(var(--tuft-rotation, 0deg)) scale(var(--tuft-scale, 1));
+    filter: contrast(1.05) saturate(1.1);
 }
 
 .tuft-1 {
-    top: 8px;
+    top: 7px;
     left: 14%;
-    height: 10px;
+    height: 11px;
+    --tuft-rotation: -3deg;
+    --tuft-scale: 1.1;
 }
 
 .tuft-2 {
-    top: 6px;
+    top: 5px;
     left: 38%;
-    height: 12px;
-    width: 2px;
+    height: 13px;
+    width: 2.5px;
+    --tuft-rotation: 5deg;
+    --tuft-scale: 0.9;
 }
 
 .tuft-3 {
-    top: 9px;
+    top: 8px;
     left: 61%;
-    height: 9px;
+    height: 10px;
+    --tuft-rotation: -2deg;
+    --tuft-scale: 1.05;
 }
 
 .tuft-4 {
-    top: 7px;
+    top: 6px;
     left: 89%;
-    height: 11px;
-    width: 2px;
+    height: 12px;
+    width: 2.5px;
+    --tuft-rotation: 4deg;
+    --tuft-scale: 0.95;
 }
+
+/* Enhanced Environmental Details */
+.ground-debris {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* Small pebbles and debris */
+.pebble {
+    position: absolute;
+    background: radial-gradient(circle at 35% 25%, #A0A0A0 0%, #606060 60%, #303030 100%);
+    border-radius: 50%;
+    box-shadow: 
+        inset -1px -1px 2px rgba(0,0,0,0.4),
+        1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.pebble-1 { width: 2px; height: 2px; top: 16px; left: 8%; }
+.pebble-2 { width: 1.5px; height: 1.5px; top: 20px; left: 32%; }
+.pebble-3 { width: 2.5px; height: 2px; top: 14px; left: 58%; }
+.pebble-4 { width: 1px; height: 1px; top: 18px; left: 76%; }
+.pebble-5 { width: 2px; height: 1.5px; top: 12px; left: 94%; }
+
+/* Worn soil patches */
+.worn-patch {
+    position: absolute;
+    background: 
+        radial-gradient(ellipse, rgba(120, 78, 42, 0.4) 0%, rgba(85, 57, 28, 0.3) 50%, transparent 80%);
+    border-radius: 70% 30% 40% 60%;
+    filter: blur(1px);
+}
+
+.worn-1 { width: 25px; height: 12px; top: 22px; left: 12%; transform: rotate(-15deg); }
+.worn-2 { width: 18px; height: 8px; top: 24px; left: 47%; transform: rotate(8deg); }
+.worn-3 { width: 22px; height: 10px; top: 20px; left: 82%; transform: rotate(-12deg); }
+
+/* Subtle root traces */
+.root-trace {
+    position: absolute;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(101, 67, 33, 0.3) 20%, 
+        rgba(85, 57, 28, 0.4) 50%, 
+        rgba(101, 67, 33, 0.3) 80%, 
+        transparent 100%
+    );
+    height: 1px;
+    border-radius: 50%;
+    filter: blur(0.5px);
+}
+
+.root-1 { width: 30px; top: 25px; left: 20%; transform: rotate(-5deg); }
+.root-2 { width: 25px; top: 28px; left: 60%; transform: rotate(8deg); }
 
 /* Path Decorations */
 .path-decorations {
@@ -1113,6 +1315,7 @@ body {
     z-index: 15;
     opacity: 0;
     transition: opacity 0.6s ease-in-out;
+    z-index: 1000;
 }
 
 .month-overlay.show {
@@ -1143,10 +1346,9 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0.95);
     z-index: 25;
     opacity: 0;
-    transition: all 0.8s ease-in-out;
     pointer-events: none;
 }
 
@@ -1190,28 +1392,7 @@ body {
     }
 }
 
-/* Progress Indicator */
-.progress-container {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    max-width: 400px;
-    height: 6px;
-    background: rgba(255,255,255,0.3);
-    border-radius: 3px;
-    overflow: hidden;
-}
 
-.progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, #ff6b6b, #ff8e53);
-    border-radius: 3px;
-    width: 0%;
-    transition: width 0.3s ease;
-    box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
-}
 
 /* Gradient Variations for Different Months */
 .gradient-1 { 
@@ -1269,10 +1450,7 @@ body {
         height: 25px;
     }
     
-    .progress-container {
-        width: 90%;
-        bottom: 30px;
-    }
+
     
     .flower {
         width: 14px;
