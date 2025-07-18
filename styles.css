@@ -1,0 +1,1376 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    overflow: hidden;
+    background: #000;
+    height: 100vh;
+}
+
+/* Landing Page - Night Sky */
+.landing-page {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(180deg, #0a0a23 0%, #1a1a3e 50%, #2d2d5f 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Pan image container */
+.pan-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2000px;
+    background-image: url('images/pan.png');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    z-index: 1;
+    transition: transform 13s ease-in-out;
+}
+
+/* Clean Static Stars */
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 2;
+    transition: opacity 2s ease-in-out;
+}
+
+/* Small static stars background layer */
+.stars::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(0.5px 0.5px at 8% 15%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 23% 42%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.5px 0.5px at 45% 28%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 67% 71%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.5px 0.5px at 82% 19%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 91% 58%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.5px 0.5px at 15% 83%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 38% 9%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.5px 0.5px at 52% 94%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 74% 35%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.5px 0.5px at 12% 67%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 89% 81%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.5px 0.5px at 4% 48%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 17% 22%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.5px 0.5px at 31% 78%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 49% 53%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.5px 0.5px at 61% 7%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 73% 89%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.5px 0.5px at 86% 44%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 94% 26%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.5px 0.5px at 19% 65%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 37% 31%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.5px 0.5px at 58% 86%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 79% 12%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.5px 0.5px at 96% 73%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 11% 39%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.5px 0.5px at 2% 91%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 26% 14%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.5px 0.5px at 44% 62%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 59% 29%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.5px 0.5px at 77% 95%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 83% 8%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.5px 0.5px at 98% 54%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 6% 76%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.5px 0.5px at 21% 33%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 39% 87%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.5px 0.5px at 56% 18%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 71% 64%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.5px 0.5px at 88% 41%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 93% 92%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.5px 0.5px at 9% 11%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 32% 58%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.5px 0.5px at 47% 79%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 64% 3%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.5px 0.5px at 81% 47%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 5% 25%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.5px 0.5px at 28% 72%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 50% 36%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.5px 0.5px at 75% 83%, #fff, transparent),
+        radial-gradient(0.5px 0.5px at 90% 16%, rgba(255,255,255,0.6), transparent);
+    animation: gentle-sparkle 3s ease-in-out infinite;
+}
+
+/* Medium static stars layer */
+.stars::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 18% 25%, #fff, transparent),
+        radial-gradient(1px 1px at 42% 68%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 63% 15%, #fff, transparent),
+        radial-gradient(1px 1px at 78% 89%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 29% 45%, #fff, transparent),
+        radial-gradient(1px 1px at 85% 32%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 7% 72%, #fff, transparent),
+        radial-gradient(1px 1px at 34% 18%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 54% 91%, #fff, transparent),
+        radial-gradient(1px 1px at 71% 58%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 89% 6%, #fff, transparent),
+        radial-gradient(1px 1px at 13% 51%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 47% 34%, #fff, transparent),
+        radial-gradient(1px 1px at 66% 77%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 92% 49%, #fff, transparent),
+        radial-gradient(1px 1px at 3% 37%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 22% 84%, #fff, transparent),
+        radial-gradient(1px 1px at 39% 21%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 57% 66%, #fff, transparent),
+        radial-gradient(1px 1px at 73% 29%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 84% 93%, #fff, transparent),
+        radial-gradient(1px 1px at 11% 14%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 26% 47%, #fff, transparent),
+        radial-gradient(1px 1px at 44% 81%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 61% 38%, #fff, transparent),
+        radial-gradient(1px 1px at 79% 74%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 95% 12%, #fff, transparent),
+        radial-gradient(1px 1px at 16% 69%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 36% 56%, #fff, transparent),
+        radial-gradient(1px 1px at 52% 4%, rgba(255,255,255,0.9), transparent);
+    animation: gentle-sparkle 4s ease-in-out infinite reverse;
+}
+
+.bright-stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 3;
+    transition: opacity 2s ease-in-out;
+}
+
+/* Bright static stars */
+.bright-stars::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 25% 20%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 55% 75%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2px 2px at 72% 40%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 14% 88%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1.8px 1.8px at 8% 52%, #fff, transparent),
+        radial-gradient(2.2px 2.2px at 41% 13%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1.7px 1.7px at 68% 82%, #fff, transparent),
+        radial-gradient(2px 2px at 87% 35%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1.9px 1.9px at 33% 59%, #fff, transparent),
+        radial-gradient(1.6px 1.6px at 76% 17%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2.1px 2.1px at 5% 73%, #fff, transparent),
+        radial-gradient(1.8px 1.8px at 19% 46%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(2.3px 2.3px at 47% 22%, #fff, transparent),
+        radial-gradient(1.7px 1.7px at 62% 91%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2px 2px at 78% 64%, #fff, transparent),
+        radial-gradient(1.9px 1.9px at 91% 27%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(2.2px 2.2px at 12% 9%, #fff, transparent),
+        radial-gradient(1.6px 1.6px at 38% 78%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2.4px 2.4px at 54% 41%, #fff, transparent),
+        radial-gradient(1.8px 1.8px at 69% 15%, rgba(255,255,255,0.8), transparent);
+    animation: bright-sparkle 2.5s ease-in-out infinite;
+}
+
+.sparkling-stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 4;
+    transition: opacity 2s ease-in-out;
+}
+
+/* Special sparkling stars */
+.sparkling-stars::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2.5px 2.5px at 35% 30%, #fff, transparent),
+        radial-gradient(2px 2px at 68% 85%, #fff, transparent),
+        radial-gradient(2.5px 2.5px at 88% 12%, #fff, transparent),
+        radial-gradient(2.3px 2.3px at 16% 64%, #fff, transparent),
+        radial-gradient(2.7px 2.7px at 51% 47%, #fff, transparent),
+        radial-gradient(2.2px 2.2px at 79% 71%, #fff, transparent),
+        radial-gradient(2.4px 2.4px at 24% 8%, #fff, transparent),
+        radial-gradient(2.6px 2.6px at 93% 56%, #fff, transparent),
+        radial-gradient(2.5px 2.5px at 6% 82%, #fff, transparent),
+        radial-gradient(2.3px 2.3px at 29% 35%, #fff, transparent),
+        radial-gradient(2.8px 2.8px at 46% 67%, #fff, transparent),
+        radial-gradient(2.2px 2.2px at 65% 14%, #fff, transparent),
+        radial-gradient(2.7px 2.7px at 82% 89%, #fff, transparent),
+        radial-gradient(2.4px 2.4px at 17% 51%, #fff, transparent),
+        radial-gradient(2.6px 2.6px at 58% 28%, #fff, transparent),
+        radial-gradient(2.1px 2.1px at 75% 76%, #fff, transparent);
+    animation: star-sparkle 1.8s ease-in-out infinite;
+}
+
+.sparkling-stars::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2.1px 2.1px at 12% 28%, #fff, transparent),
+        radial-gradient(2.4px 2.4px at 44% 63%, #fff, transparent),
+        radial-gradient(2.2px 2.2px at 61% 19%, #fff, transparent),
+        radial-gradient(2.5px 2.5px at 83% 84%, #fff, transparent),
+        radial-gradient(2.3px 2.3px at 27% 92%, #fff, transparent),
+        radial-gradient(2.1px 2.1px at 74% 43%, #fff, transparent),
+        radial-gradient(2.2px 2.2px at 8% 15%, #fff, transparent),
+        radial-gradient(2.6px 2.6px at 35% 58%, #fff, transparent),
+        radial-gradient(2.4px 2.4px at 53% 37%, #fff, transparent),
+        radial-gradient(2.3px 2.3px at 69% 81%, #fff, transparent),
+        radial-gradient(2.5px 2.5px at 86% 24%, #fff, transparent),
+        radial-gradient(2.2px 2.2px at 41% 73%, #fff, transparent);
+    animation: star-sparkle 2.2s ease-in-out infinite reverse;
+}
+
+/* Dramatic sparkle animations - opacity only, no movement */
+@keyframes gentle-sparkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+}
+
+@keyframes bright-sparkle {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 1; }
+}
+
+@keyframes star-sparkle {
+    0%, 100% { opacity: 0; }
+    25% { opacity: 1; }
+    50% { opacity: 0.3; }
+    75% { opacity: 1; }
+}
+
+/* Transition Clouds */
+.transition-clouds {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 15;
+}
+
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 100px;
+    opacity: 0.9;
+}
+
+.cloud::before {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 100px;
+}
+
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 100px;
+}
+
+
+
+/* Transition clouds with different positions and movements */
+.transition-cloud-1 {
+    width: 140px;
+    height: 70px;
+    top: 30%;
+    left: 5%;
+    animation: transition-drift-1 15s ease-in-out infinite;
+}
+
+.transition-cloud-1::before {
+    width: 110px;
+    height: 55px;
+    top: -30px;
+    left: 20px;
+}
+
+.transition-cloud-1::after {
+    width: 85px;
+    height: 43px;
+    top: -18px;
+    right: 25px;
+}
+
+.transition-cloud-2 {
+    width: 100px;
+    height: 50px;
+    top: 45%;
+    right: 15%;
+    animation: transition-drift-2 20s ease-in-out infinite;
+}
+
+.transition-cloud-2::before {
+    width: 80px;
+    height: 40px;
+    top: -20px;
+    left: 15px;
+}
+
+.transition-cloud-2::after {
+    width: 60px;
+    height: 30px;
+    top: -12px;
+    right: 15px;
+}
+
+.transition-cloud-3 {
+    width: 160px;
+    height: 80px;
+    top: 40%;
+    left: 50%;
+    animation: transition-drift-3 25s ease-in-out infinite;
+}
+
+.transition-cloud-3::before {
+    width: 120px;
+    height: 60px;
+    top: -35px;
+    left: 25px;
+}
+
+.transition-cloud-3::after {
+    width: 95px;
+    height: 48px;
+    top: -20px;
+    right: 30px;
+}
+
+.transition-cloud-4 {
+    width: 110px;
+    height: 55px;
+    top: 25%;
+    left: 75%;
+    animation: transition-drift-4 18s ease-in-out infinite;
+}
+
+.transition-cloud-4::before {
+    width: 85px;
+    height: 43px;
+    top: -23px;
+    left: 18px;
+}
+
+.transition-cloud-4::after {
+    width: 65px;
+    height: 33px;
+    top: -15px;
+    right: 18px;
+}
+
+.transition-cloud-5 {
+    width: 90px;
+    height: 45px;
+    top: 55%;
+    right: 30%;
+    animation: transition-drift-5 22s ease-in-out infinite;
+}
+
+.transition-cloud-5::before {
+    width: 70px;
+    height: 35px;
+    top: -18px;
+    left: 12px;
+}
+
+.transition-cloud-5::after {
+    width: 55px;
+    height: 28px;
+    top: -12px;
+    right: 12px;
+}
+
+.transition-cloud-6 {
+    width: 130px;
+    height: 65px;
+    top: 60%;
+    left: 70%;
+    animation: transition-drift-6 28s ease-in-out infinite;
+}
+
+.transition-cloud-6::before {
+    width: 100px;
+    height: 50px;
+    top: -28px;
+    left: 20px;
+}
+
+.transition-cloud-6::after {
+    width: 80px;
+    height: 40px;
+    top: -18px;
+    right: 20px;
+}
+
+/* Cloud drift animations */
+@keyframes transition-drift-1 {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(50px) translateY(-15px); }
+}
+
+@keyframes transition-drift-2 {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(-60px) translateY(20px); }
+}
+
+@keyframes transition-drift-3 {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(30px) translateY(-25px); }
+}
+
+@keyframes transition-drift-4 {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(-35px) translateY(12px); }
+}
+
+@keyframes transition-drift-5 {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(45px) translateY(-18px); }
+}
+
+@keyframes transition-drift-6 {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(-20px) translateY(25px); }
+}
+
+/* Play Button */
+.play-button-container {
+    position: relative;
+    z-index: 10;
+}
+
+.play-button {
+    background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+    border: none;
+    border-radius: 50px;
+    padding: 20px 40px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
+    transition: all 0.3s ease, opacity 1s ease-in-out;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.play-button:disabled {
+    opacity: 0;
+    cursor: not-allowed;
+    animation: none;
+    pointer-events: none;
+}
+
+/* Fade out classes for stars */
+.stars.fade-out,
+.bright-stars.fade-out,
+.sparkling-stars.fade-out {
+    opacity: 0;
+}
+
+/* Traveling Stars */
+.comet {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 30%, rgba(255, 255, 255, 0.3) 70%, transparent 100%);
+    border-radius: 50%;
+    z-index: 8;
+    box-shadow: 
+        0 0 15px rgba(255, 255, 255, 0.6), 
+        0 0 30px rgba(255, 255, 255, 0.4),
+        0 0 50px rgba(255, 255, 255, 0.2);
+    transition: opacity 2s ease-in-out;
+    opacity: 0;
+}
+
+.comet.fade-out {
+    opacity: 0 !important;
+}
+
+.play-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(255, 107, 107, 0.4);
+}
+
+.play-icon {
+    font-size: 24px;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3); }
+    50% { box-shadow: 0 8px 32px rgba(255, 107, 107, 0.6); }
+}
+
+/* Animation Container */
+.animation-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transition: opacity 1s ease-in;
+}
+
+.animation-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Sky to Ground Transition */
+.sky-transition {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.sky-gradient {
+    width: 100%;
+    height: 200%;
+    background: linear-gradient(180deg, 
+        #0a0a23 0%,          /* Deep night */
+        #1a1a3e 15%,         /* Dark night */
+        #2d2d5f 30%,         /* Purple night */
+        #4a4a7a 45%,         /* Lighter purple */
+        #ff6b6b 55%,         /* Dawn pink/orange */
+        #ffa500 65%,         /* Orange sunrise */
+        #87ceeb 75%,         /* Light blue sky */
+        #b0e0e6 85%,         /* Powder blue */
+        #e6f3ff 100%         /* Very light blue */
+    );
+    transform: translateY(0%);
+    transition: transform 8s ease-out;
+}
+
+.sky-gradient.pan-down {
+    transform: translateY(-50%);
+}
+
+/* Main Scene */
+.main-scene {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    opacity: 1;
+    z-index: 2;
+}
+
+/* Background Layer for Parallax */
+.background-layer {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%);
+    animation: background-scroll 20s linear infinite;
+}
+
+/* Background moves slower (parallax effect) */
+@keyframes background-scroll {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Ground moves faster (foreground) - longer cycle to avoid month sync issues */
+@keyframes ground-scroll {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-33.33%); }
+}
+
+/* Original parallax scroll (kept for compatibility) */
+@keyframes parallax-scroll {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-33.33%); }
+}
+
+/* Ground Platform */
+.ground-platform {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 300%;
+    height: 120px;
+    background: linear-gradient(180deg, 
+        rgba(101, 67, 33, 0.8) 0%,     /* Brown earth */
+        rgba(139, 69, 19, 0.9) 40%,    /* Darker brown */
+        rgba(160, 82, 45, 1) 70%,      /* Saddle brown */
+        rgba(139, 69, 19, 1) 100%      /* Dark brown base */
+    );
+    box-shadow: 
+        inset 0 10px 20px rgba(0,0,0,0.3),
+        0 -5px 15px rgba(0,0,0,0.2);
+    animation: ground-scroll 12s linear infinite;
+    z-index: 3;
+}
+
+.ground-platform::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25px;
+    background: 
+        /* Grass blade texture */
+        repeating-linear-gradient(90deg,
+            transparent 0px,
+            rgba(34, 139, 34, 0.3) 1px,
+            transparent 2px,
+            transparent 4px
+        ),
+        /* Grass height variation */
+        repeating-linear-gradient(45deg,
+            rgba(46, 125, 50, 0.4) 0px,
+            rgba(56, 142, 60, 0.6) 3px,
+            rgba(34, 139, 34, 0.5) 6px,
+            transparent 8px
+        ),
+        /* Base grass color */
+        linear-gradient(90deg, 
+            rgba(34, 139, 34, 0.8) 0%,     /* Forest green grass */
+            rgba(46, 125, 50, 0.9) 20%,    /* Green */
+            rgba(56, 142, 60, 0.7) 40%,    /* Medium green */
+            rgba(76, 175, 80, 0.8) 60%,    /* Light green */
+            rgba(46, 125, 50, 0.9) 80%,    /* Green */
+            rgba(34, 139, 34, 0.8) 100%    /* Forest green */
+        );
+    border-radius: 3px 3px 0 0;
+    box-shadow: 
+        inset 0 -3px 6px rgba(0,0,0,0.2),
+        0 1px 2px rgba(255,255,255,0.1);
+}
+
+.ground-platform::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: 
+        /* Soil texture pattern */
+        repeating-linear-gradient(0deg,
+            transparent 0px,
+            rgba(101, 67, 33, 0.3) 1px,
+            transparent 2px,
+            transparent 6px
+        ),
+        /* Rock/pebble texture */
+        repeating-linear-gradient(45deg,
+            transparent 0px,
+            rgba(160, 82, 45, 0.4) 1px,
+            transparent 2px,
+            transparent 12px
+        ),
+        /* Dirt clumps */
+        repeating-linear-gradient(90deg,
+            rgba(139, 69, 19, 0.2) 0px,
+            rgba(160, 82, 45, 0.3) 4px,
+            transparent 8px,
+            transparent 15px
+        );
+    z-index: -1;
+}
+
+/* Ground Detail Elements */
+.ground-details {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.rock {
+    position: absolute;
+    background: radial-gradient(circle, #696969 0%, #2f4f4f 70%, #191970 100%);
+    border-radius: 50%;
+    box-shadow: 
+        inset -2px -2px 4px rgba(0,0,0,0.5),
+        2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.rock-1 {
+    width: 6px;
+    height: 4px;
+    top: 15px;
+    left: 18%;
+}
+
+.rock-2 {
+    width: 4px;
+    height: 3px;
+    top: 12px;
+    left: 42%;
+}
+
+.rock-3 {
+    width: 8px;
+    height: 5px;
+    top: 18px;
+    left: 67%;
+}
+
+.rock-4 {
+    width: 3px;
+    height: 2px;
+    top: 14px;
+    left: 85%;
+}
+
+.rock-5 {
+    width: 5px;
+    height: 4px;
+    top: 16px;
+    left: 93%;
+}
+
+.dirt-patch {
+    position: absolute;
+    background: radial-gradient(ellipse, rgba(101, 67, 33, 0.6) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.patch-1 {
+    width: 15px;
+    height: 8px;
+    top: 20px;
+    left: 25%;
+}
+
+.patch-2 {
+    width: 12px;
+    height: 6px;
+    top: 22px;
+    left: 55%;
+}
+
+.patch-3 {
+    width: 18px;
+    height: 10px;
+    top: 19px;
+    left: 78%;
+}
+
+.grass-tuft {
+    position: absolute;
+    width: 3px;
+    height: 8px;
+    background: linear-gradient(180deg, 
+        rgba(76, 175, 80, 0.8) 0%,
+        rgba(46, 125, 50, 0.9) 50%,
+        rgba(34, 139, 34, 0.7) 100%
+    );
+    border-radius: 2px 2px 0 0;
+    box-shadow: 1px 0 2px rgba(0,0,0,0.2);
+}
+
+.tuft-1 {
+    top: 8px;
+    left: 14%;
+    height: 10px;
+}
+
+.tuft-2 {
+    top: 6px;
+    left: 38%;
+    height: 12px;
+    width: 2px;
+}
+
+.tuft-3 {
+    top: 9px;
+    left: 61%;
+    height: 9px;
+}
+
+.tuft-4 {
+    top: 7px;
+    left: 89%;
+    height: 11px;
+    width: 2px;
+}
+
+/* Path Decorations */
+.path-decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* CSS Flowers */
+.flower {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    animation: gentle-sway 3s ease-in-out infinite;
+    user-select: none;
+    pointer-events: none;
+}
+
+.flower-center {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #ffd700;
+    border-radius: 50%;
+    top: 6px;
+    left: 6px;
+    z-index: 2;
+}
+
+.petal {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #ff69b4;
+    border-radius: 50% 0;
+    top: 5px;
+    left: 5px;
+}
+
+.petal-1 { transform: rotate(0deg) translate(6px); }
+.petal-2 { transform: rotate(72deg) translate(6px); }
+.petal-3 { transform: rotate(144deg) translate(6px); }
+.petal-4 { transform: rotate(216deg) translate(6px); }
+.petal-5 { transform: rotate(288deg) translate(6px); }
+
+.flower-stem {
+    position: absolute;
+    width: 2px;
+    height: 8px;
+    background: #228b22;
+    top: 14px;
+    left: 7px;
+    border-radius: 1px;
+}
+
+
+
+/* Individual flower positions and colors */
+.flower-1 {
+    top: -20px;
+    left: 8%;
+    animation-delay: 0s;
+}
+
+.flower-1 .petal { background: #ff69b4; } /* Pink */
+
+.flower-2 {
+    top: -18px;
+    left: 23%;
+    transform: scale(0.8);
+    animation-delay: 0.5s;
+}
+
+.flower-2 .petal { background: #ffb6c1; } /* Light pink */
+
+.flower-3 {
+    top: -22px;
+    left: 41%;
+    animation-delay: 1s;
+}
+
+.flower-3 .petal { background: #ff1493; } /* Deep pink */
+
+.flower-4 {
+    top: -19px;
+    left: 58%;
+    transform: scale(1.2);
+    animation-delay: 1.5s;
+}
+
+.flower-4 .petal { background: #ffa500; } /* Orange */
+.flower-4 .flower-center { background: #8b4513; } /* Brown center */
+
+.flower-5 {
+    top: -20px;
+    left: 76%;
+    animation-delay: 2s;
+}
+
+.flower-5 .petal { background: #da70d6; } /* Orchid */
+
+.flower-6 {
+    top: -18px;
+    left: 89%;
+    transform: scale(0.8);
+    animation-delay: 0.8s;
+}
+
+.flower-6 .petal { background: #ff69b4; } /* Pink */
+
+.flower-7 {
+    top: -16px;
+    left: 12%;
+    transform: scale(0.6);
+    animation-delay: 3.2s;
+}
+
+.flower-7 .petal { background: #87ceeb; } /* Sky blue */
+.flower-7 .flower-center { background: #ffff00; } /* Yellow */
+
+.flower-8 {
+    top: -24px;
+    left: 28%;
+    transform: scale(1.1);
+    animation-delay: 1.7s;
+}
+
+.flower-8 .petal { background: #dda0dd; } /* Plum */
+
+.flower-9 {
+    top: -15px;
+    left: 36%;
+    transform: scale(0.5);
+    animation-delay: 4.1s;
+}
+
+.flower-9 .petal { background: #98fb98; } /* Pale green */
+
+.flower-10 {
+    top: -21px;
+    left: 53%;
+    transform: scale(0.9);
+    animation-delay: 2.8s;
+}
+
+.flower-10 .petal { background: #f0e68c; } /* Khaki */
+
+.flower-11 {
+    top: -17px;
+    left: 63%;
+    transform: scale(0.7);
+    animation-delay: 5.3s;
+}
+
+.flower-11 .petal { background: #ffc0cb; } /* Pink */
+
+.flower-12 {
+    top: -23px;
+    left: 71%;
+    transform: scale(1.3);
+    animation-delay: 0.9s;
+}
+
+.flower-12 .petal { background: #ff6347; } /* Tomato */
+.flower-12 .flower-center { background: #2f4f4f; } /* Dark slate gray */
+
+.flower-13 {
+    top: -14px;
+    left: 84%;
+    transform: scale(0.4);
+    animation-delay: 3.7s;
+}
+
+.flower-13 .petal { background: #9370db; } /* Medium purple */
+
+.flower-14 {
+    top: -26px;
+    left: 92%;
+    transform: scale(0.8);
+    animation-delay: 2.1s;
+}
+
+.flower-14 .petal { background: #40e0d0; } /* Turquoise */
+
+.flower-15 {
+    top: -19px;
+    left: 97%;
+    transform: scale(0.6);
+    animation-delay: 4.8s;
+}
+
+.flower-15 .petal { background: #ffb6c1; } /* Light pink */
+
+
+
+@keyframes gentle-sway {
+    0%, 100% { 
+        transform: translateX(0) rotate(0deg); 
+    }
+    25% { 
+        transform: translateX(1px) rotate(1deg); 
+    }
+    75% { 
+        transform: translateX(-1px) rotate(-1deg); 
+    }
+}
+
+/* Character */
+.character {
+    position: absolute;
+    bottom: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    animation: character-bob 0.6s ease-in-out infinite alternate;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.character.show {
+    opacity: 1;
+}
+
+.character-body {
+    width: 50px;
+    height: 100px;
+    background: #333;
+    border-radius: 25px 25px 10px 10px;
+    position: relative;
+}
+
+.character-legs {
+    position: relative;
+    width: 50px;
+    height: 30px;
+    margin-top: -10px;
+}
+
+.leg {
+    position: absolute;
+    width: 15px;
+    height: 30px;
+    background: #333;
+    border-radius: 8px;
+    bottom: 0;
+}
+
+.left-leg {
+    left: 8px;
+    animation: left-leg-run 0.8s ease-in-out infinite;
+}
+
+.right-leg {
+    right: 8px;
+    animation: right-leg-run 0.8s ease-in-out infinite;
+}
+
+@keyframes character-bob {
+    0% { transform: translateX(-50%) translateY(0px); }
+    100% { transform: translateX(-50%) translateY(-5px); }
+}
+
+@keyframes left-leg-run {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-20deg); }
+}
+
+@keyframes right-leg-run {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(20deg); }
+}
+
+/* Month Overlay */
+.month-overlay {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.month-overlay.show {
+    opacity: 1;
+}
+
+.month-text {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: bold;
+    color: white;
+    text-shadow: 
+        2px 2px 4px rgba(0,0,0,0.5),
+        0 0 20px rgba(255,255,255,0.3);
+    text-align: center;
+    letter-spacing: 2px;
+    animation: month-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes month-glow {
+    0% { text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.3); }
+    100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 30px rgba(255,255,255,0.6); }
+}
+
+/* Black Transition Screen */
+.black-transition {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    z-index: 25;
+    opacity: 0;
+    transition: all 0.8s ease-in-out;
+    pointer-events: none;
+}
+
+.black-transition.fade-in {
+    background: rgba(0, 0, 0, 0.95);
+    opacity: 1;
+}
+
+.transition-month-text {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: bold;
+    color: white;
+    text-shadow: 
+        2px 2px 8px rgba(0,0,0,0.8),
+        0 0 30px rgba(255,255,255,0.5);
+    text-align: center;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+    animation: transition-glow 2s ease-in-out infinite alternate;
+}
+
+.transition-month-text.show {
+    opacity: 1;
+}
+
+@keyframes transition-glow {
+    0% { 
+        text-shadow: 
+            2px 2px 8px rgba(0,0,0,0.8),
+            0 0 30px rgba(255,255,255,0.5);
+    }
+    100% { 
+        text-shadow: 
+            2px 2px 8px rgba(0,0,0,0.8),
+            0 0 50px rgba(255,255,255,0.8);
+    }
+}
+
+/* Progress Indicator */
+.progress-container {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 400px;
+    height: 6px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+}
+
+/* Gradient Variations for Different Months */
+.gradient-1 { 
+    background: url('images/1.png') center no-repeat, 
+                linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%);
+    background-size: 85%;
+}
+.gradient-2 { 
+    background: url('images/2.png') center no-repeat, 
+                linear-gradient(90deg, #a8edea 0%, #fed6e3 100%);
+    background-size: 85%;
+}
+.gradient-3 { background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%); }
+.gradient-4 { background: linear-gradient(90deg, #ff8a80 0%, #ea6100 100%); }
+.gradient-5 { background: linear-gradient(90deg, #8fd3f4 0%, #84fab0 100%); }
+.gradient-6 { background: linear-gradient(90deg, #cbaacb 0%, #ffccb6 100%); }
+.gradient-7 { background: linear-gradient(90deg, #3b4371 0%, #f3904f 100%); }
+.gradient-8 { background: linear-gradient(90deg, #b721ff 0%, #21d4fd 100%); }
+.gradient-9 { background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%); }
+.gradient-10 { background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); }
+.gradient-11 { background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%); }
+.gradient-12 { background: linear-gradient(90deg, #fa709a 0%, #fee140 100%); }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .play-button {
+        padding: 15px 30px;
+        font-size: 16px;
+    }
+    
+    .play-icon {
+        font-size: 20px;
+    }
+    
+    .ground-platform {
+        height: 100px;
+    }
+    
+    .character {
+        bottom: 100px;
+    }
+    
+    .character-body {
+        width: 40px;
+        height: 80px;
+    }
+    
+    .character-legs {
+        width: 40px;
+        height: 25px;
+    }
+    
+    .leg {
+        width: 12px;
+        height: 25px;
+    }
+    
+    .progress-container {
+        width: 90%;
+        bottom: 30px;
+    }
+    
+    .flower {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .flower-4 {
+        transform: scale(1.0);
+    }
+    
+    .flower-8 {
+        transform: scale(0.9);
+    }
+    
+    .flower-12 {
+        transform: scale(1.1);
+    }
+    
+    .rock {
+        width: 4px !important;
+        height: 3px !important;
+    }
+    
+    .dirt-patch {
+        width: 10px !important;
+        height: 6px !important;
+    }
+    
+    .grass-tuft {
+        width: 2px !important;
+        height: 6px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .ground-platform {
+        height: 80px;
+    }
+    
+    .character {
+        bottom: 80px;
+    }
+    
+    .character-body {
+        width: 35px;
+        height: 70px;
+    }
+    
+    .character-legs {
+        width: 35px;
+        height: 20px;
+    }
+    
+    .leg {
+        width: 10px;
+        height: 20px;
+    }
+    
+    .flower {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .flower-4 {
+        transform: scale(0.9);
+    }
+    
+    .flower-8 {
+        transform: scale(0.8);
+    }
+    
+    .flower-12 {
+        transform: scale(1.0);
+    }
+    
+    .rock {
+        width: 3px !important;
+        height: 2px !important;
+    }
+    
+    .dirt-patch {
+        width: 8px !important;
+        height: 4px !important;
+    }
+    
+    .grass-tuft {
+        width: 2px !important;
+        height: 5px !important;
+    }
+}
+
+/* Fade Transitions for Month Changes */
+.fade-transition {
+    animation: fade-in-out 1s ease-in-out;
+}
+
+@keyframes fade-in-out {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+} 

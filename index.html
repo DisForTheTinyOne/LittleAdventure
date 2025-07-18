@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototype 1 ✨</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Landing Page - Night Sky -->
+    <div id="landing-page" class="landing-page">
+        <div id="pan-image" class="pan-image"></div>
+        <div class="stars"></div>
+        <div class="bright-stars"></div>
+        <div class="sparkling-stars"></div>
+        <div class="comet star-1"></div>
+        <div class="comet star-2"></div>
+        <div class="comet star-3"></div>
+        <div class="play-button-container">
+            <button id="play-button" class="play-button">
+                <span class="play-icon">▶</span>
+                <span class="play-text">Begin The Lil' Journey</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Animation Container -->
+    <div id="animation-container" class="animation-container hidden">
+        <!-- Sky to Ground Transition -->
+        <div id="sky-transition" class="sky-transition">
+            <div class="sky-gradient"></div>
+            <div class="transition-clouds">
+                <div class="cloud transition-cloud-1"></div>
+                <div class="cloud transition-cloud-2"></div>
+                <div class="cloud transition-cloud-3"></div>
+                <div class="cloud transition-cloud-4"></div>
+                <div class="cloud transition-cloud-5"></div>
+                <div class="cloud transition-cloud-6"></div>
+            </div>
+        </div>
+
+        <!-- Main Animation Scene -->
+        <div id="main-scene" class="main-scene">
+            <!-- Background Layers for Parallax -->
+            <div id="background-layer" class="background-layer"></div>
+            
+            <!-- Ground Platform -->
+            <div id="ground-platform" class="ground-platform">
+                <div class="ground-details">
+                    <div class="rock rock-1"></div>
+                    <div class="rock rock-2"></div>
+                    <div class="rock rock-3"></div>
+                    <div class="rock rock-4"></div>
+                    <div class="rock rock-5"></div>
+                    <div class="dirt-patch patch-1"></div>
+                    <div class="dirt-patch patch-2"></div>
+                    <div class="dirt-patch patch-3"></div>
+                    <div class="grass-tuft tuft-1"></div>
+                    <div class="grass-tuft tuft-2"></div>
+                    <div class="grass-tuft tuft-3"></div>
+                    <div class="grass-tuft tuft-4"></div>
+                </div>
+                <div class="path-decorations">
+                    <div class="flower flower-1">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-2">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-3">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-4">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-5">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-6">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-7">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-8">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-9">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-10">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-11">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-12">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-13">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-14">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-15">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Character -->
+            <div id="character" class="character">
+                <div class="character-body"></div>
+                <div class="character-legs">
+                    <div class="leg left-leg"></div>
+                    <div class="leg right-leg"></div>
+                </div>
+            </div>
+
+            <!-- Month Overlay -->
+            <div id="month-overlay" class="month-overlay">
+                <h1 id="month-text" class="month-text"></h1>
+            </div>
+
+            <!-- Black Transition Screen -->
+            <div id="black-transition" class="black-transition">
+                <h1 id="transition-month-text" class="transition-month-text"></h1>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="background-music" preload="auto" loop>
+        <source src="song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html> 
