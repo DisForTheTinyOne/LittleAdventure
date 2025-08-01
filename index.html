@@ -9,7 +9,77 @@
 <body>
     <!-- Landing Page - Night Sky -->
     <div id="landing-page" class="landing-page">
-        <div id="pan-image" class="pan-image"></div>
+        <div id="pan-image" class="pan-image">
+            <!-- Static Ground for Pan Image -->
+            <div id="static-ground" class="static-ground-platform">
+                <!-- Pan User Character -->
+                <div id="pan-user-character" class="pan-user-character">
+                    <div class="character-block"></div>
+                </div>
+                
+                <div class="static-ground-details">
+                    <div class="rock rock-1"></div>
+                    <div class="rock rock-2"></div>
+                    <div class="rock rock-3"></div>
+                    <div class="rock rock-4"></div>
+                    <div class="rock rock-5"></div>
+                    <div class="dirt-patch patch-1"></div>
+                    <div class="dirt-patch patch-2"></div>
+                    <div class="dirt-patch patch-3"></div>
+                    <div class="grass-tuft tuft-1"></div>
+                    <div class="grass-tuft tuft-2"></div>
+                    <div class="grass-tuft tuft-3"></div>
+                    <div class="grass-tuft tuft-4"></div>
+                </div>
+                <div class="static-path-decorations">
+                    <div class="flower flower-1">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-2">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-3">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-4">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                    <div class="flower flower-5">
+                        <div class="flower-center"></div>
+                        <div class="petal petal-1"></div>
+                        <div class="petal petal-2"></div>
+                        <div class="petal petal-3"></div>
+                        <div class="petal petal-4"></div>
+                        <div class="petal petal-5"></div>
+                        <div class="flower-stem"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="stars"></div>
         <div class="bright-stars"></div>
         <div class="sparkling-stars"></div>
@@ -59,18 +129,6 @@
                     <div class="grass-tuft tuft-2"></div>
                     <div class="grass-tuft tuft-3"></div>
                     <div class="grass-tuft tuft-4"></div>
-                </div>
-                <div class="ground-debris">
-                    <div class="pebble pebble-1"></div>
-                    <div class="pebble pebble-2"></div>
-                    <div class="pebble pebble-3"></div>
-                    <div class="pebble pebble-4"></div>
-                    <div class="pebble pebble-5"></div>
-                    <div class="worn-patch worn-1"></div>
-                    <div class="worn-patch worn-2"></div>
-                    <div class="worn-patch worn-3"></div>
-                    <div class="root-trace root-1"></div>
-                    <div class="root-trace root-2"></div>
                 </div>
                 <div class="path-decorations">
                     <div class="flower flower-1">
@@ -211,13 +269,17 @@
                 </div>
             </div>
             
-            <!-- Character -->
-            <div id="character" class="character">
-                <div class="character-body"></div>
-                <div class="character-legs">
-                    <div class="leg left-leg"></div>
-                    <div class="leg right-leg"></div>
-                </div>
+            <!-- Characters -->
+            <div id="character-user" class="character character-user">
+                <div class="character-block"></div>
+            </div>
+
+            <div id="character-girlfriend" class="character character-girlfriend">
+                <div class="character-block"></div>
+            </div>
+
+            <div id="character-dog" class="character character-dog">
+                <div class="character-block"></div>
             </div>
 
             <!-- Month Overlay -->
@@ -228,9 +290,13 @@
             <!-- Black Transition Screen -->
             <div id="black-transition" class="black-transition">
                 <h1 id="transition-month-text" class="transition-month-text"></h1>
+                <h2 id="transition-year-text" class="transition-year-text"></h2>
             </div>
 
-
+            <!-- Progress Indicator -->
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
         </div>
     </div>
 

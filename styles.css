@@ -48,12 +48,16 @@ body {
 
 /* Clean Static Stars */
 .stars {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile */
     overflow: hidden;
     z-index: 2;
     transition: opacity 5s ease-in-out;
+    pointer-events: none; /* Allow clicks to pass through */
 }
 
 /* Small static stars background layer */
@@ -161,12 +165,16 @@ body {
 }
 
 .bright-stars {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile */
     overflow: hidden;
     z-index: 3;
     transition: opacity 5s ease-in-out;
+    pointer-events: none; /* Allow clicks to pass through */
 }
 
 /* Bright static stars */
@@ -202,12 +210,16 @@ body {
 }
 
 .sparkling-stars {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile */
     overflow: hidden;
     z-index: 4;
     transition: opacity 5s ease-in-out;
+    pointer-events: none; /* Allow clicks to pass through */
 }
 
 /* Special sparkling stars */
@@ -623,28 +635,213 @@ body {
 /* Background Layer for Parallax */
 .background-layer {
     position: absolute;
-    width: 200%;
+    width: 300%;
     height: 100%;
-    background: linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%);
-    animation: background-scroll 20s linear infinite;
+    background-size: auto 100%;
+    background-position: center bottom;
+    background-repeat: repeat-x;
+    transform: translateX(-10%);
+    animation: background-scroll 25s linear infinite;
 }
 
 /* Background moves slower (parallax effect) */
 @keyframes background-scroll {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-50%); }
+    0% { transform: translateX(-10%); }
+    100% { transform: translateX(-85%); }
 }
 
-/* Ground moves faster (foreground) - longer cycle to avoid month sync issues */
+/* Ground moves faster (foreground) - seamless infinite scroll */
 @keyframes ground-scroll {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-33.33%); }
+    0% { transform: translateX(-16.66%); }
+    100% { transform: translateX(-66.66%); }
 }
+
+
 
 /* Original parallax scroll (kept for compatibility) */
 @keyframes parallax-scroll {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-33.33%); }
+    0% { transform: translateX(-16.66%); }
+    100% { transform: translateX(-66.66%); }
+}
+
+/* Static Ground Platform for Pan Image */
+.static-ground-platform {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: 
+        /* Subtle noise texture overlay */
+        radial-gradient(circle at 20% 80%, rgba(160, 82, 45, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(101, 67, 33, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(139, 69, 19, 0.2) 0%, transparent 60%),
+        /* Main soil layering with realistic depth */
+        linear-gradient(180deg, 
+            rgba(85, 57, 28, 0.95) 0%,      /* Rich topsoil */
+            rgba(101, 67, 33, 1) 15%,       /* Brown earth layer */
+            rgba(120, 78, 42, 1) 30%,       /* Medium brown */
+            rgba(139, 69, 19, 1) 50%,       /* Darker brown */
+            rgba(160, 82, 45, 1) 70%,       /* Saddle brown */
+            rgba(101, 56, 24, 1) 85%,       /* Deep earth */
+            rgba(72, 39, 15, 1) 100%        /* Dark subsoil */
+        );
+    box-shadow: 
+        /* Enhanced depth shadows */
+        inset 0 15px 30px rgba(0,0,0,0.4),
+        inset 0 -3px 10px rgba(0,0,0,0.3),
+        0 -8px 20px rgba(0,0,0,0.25),
+        0 -2px 8px rgba(0,0,0,0.15);
+    /* NO animation - this is static */
+    z-index: 3;
+    /* Add subtle texture through filter */
+    filter: contrast(1.1) saturate(1.05);
+}
+
+.static-ground-platform::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background: 
+        /* Detailed grass blade texture with natural variation */
+        repeating-linear-gradient(91deg,
+            transparent 0px,
+            rgba(34, 139, 34, 0.4) 0.5px,
+            rgba(46, 125, 50, 0.6) 1px,
+            transparent 1.5px,
+            transparent 3px
+        ),
+        repeating-linear-gradient(89deg,
+            transparent 0px,
+            rgba(56, 142, 60, 0.3) 0.8px,
+            transparent 1.2px,
+            transparent 4px
+        ),
+        /* Grass density variation with shadows */
+        repeating-linear-gradient(45deg,
+            rgba(28, 100, 28, 0.5) 0px,
+            rgba(46, 125, 50, 0.7) 2px,
+            rgba(56, 142, 60, 0.8) 4px,
+            rgba(34, 139, 34, 0.6) 6px,
+            transparent 8px,
+            transparent 12px
+        ),
+        /* Subtle lighting gradients */
+        linear-gradient(180deg,
+            rgba(76, 175, 80, 0.9) 0%,     /* Lit grass tips */
+            rgba(56, 142, 60, 0.95) 40%,   /* Mid grass */
+            rgba(46, 125, 50, 1) 70%,      /* Grass base */
+            rgba(34, 139, 34, 1) 100%      /* Deep grass roots */
+        ),
+        /* Base grass color with natural variation */
+        linear-gradient(90deg, 
+            rgba(28, 120, 28, 0.9) 0%,     /* Deep forest green */
+            rgba(34, 139, 34, 0.95) 15%,   /* Forest green */
+            rgba(46, 125, 50, 1) 30%,      /* Rich green */
+            rgba(56, 142, 60, 0.9) 45%,    /* Medium green */
+            rgba(76, 175, 80, 0.85) 60%,   /* Bright green */
+            rgba(56, 142, 60, 0.9) 75%,    /* Medium green */
+            rgba(46, 125, 50, 1) 90%,      /* Rich green */
+            rgba(34, 139, 34, 0.95) 100%   /* Forest green */
+        );
+    border-radius: 4px 4px 0 0;
+    box-shadow: 
+        /* Enhanced grass shadows for depth */
+        inset 0 -4px 8px rgba(0,0,0,0.25),
+        inset 0 2px 4px rgba(255,255,255,0.1),
+        0 1px 3px rgba(255,255,255,0.2),
+        0 -1px 2px rgba(0,0,0,0.1);
+    /* Add subtle texture and lighting */
+    filter: contrast(1.05) brightness(1.02);
+}
+
+.static-ground-platform::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 0;
+    width: 100%;
+    height: 108px;
+    background: 
+        /* Complex soil stratification layers */
+        repeating-linear-gradient(2deg,
+            transparent 0px,
+            rgba(101, 67, 33, 0.4) 0.8px,
+            rgba(85, 57, 28, 0.3) 1.5px,
+            transparent 2px,
+            transparent 8px
+        ),
+        repeating-linear-gradient(-1deg,
+            transparent 0px,
+            rgba(120, 78, 42, 0.3) 1px,
+            transparent 1.8px,
+            transparent 6px
+        ),
+        /* Enhanced rock and pebble distribution */
+        repeating-linear-gradient(47deg,
+            transparent 0px,
+            rgba(160, 82, 45, 0.5) 0.6px,
+            rgba(139, 69, 19, 0.4) 1.2px,
+            transparent 2px,
+            transparent 14px
+        ),
+        repeating-linear-gradient(-43deg,
+            transparent 0px,
+            rgba(101, 56, 24, 0.3) 0.8px,
+            transparent 1.5px,
+            transparent 18px
+        ),
+        /* Dirt clumps and organic matter */
+        repeating-linear-gradient(92deg,
+            rgba(72, 39, 15, 0.25) 0px,
+            rgba(139, 69, 19, 0.35) 3px,
+            rgba(160, 82, 45, 0.4) 6px,
+            rgba(101, 67, 33, 0.3) 9px,
+            transparent 12px,
+            transparent 20px
+        ),
+        /* Subtle moisture variations */
+        repeating-linear-gradient(88deg,
+            transparent 0px,
+            rgba(85, 57, 28, 0.2) 2px,
+            rgba(72, 39, 15, 0.3) 4px,
+            transparent 6px,
+            transparent 25px
+        ),
+        /* Root network traces */
+        repeating-linear-gradient(95deg,
+            transparent 0px,
+            rgba(101, 67, 33, 0.2) 1px,
+            transparent 2px,
+            transparent 30px
+        );
+    z-index: -1;
+    /* Enhanced soil realism */
+    filter: contrast(1.08) saturate(0.95) brightness(0.98);
+    opacity: 0.9;
+}
+
+/* Static Ground Detail Elements */
+.static-ground-details {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+/* Static Path Decorations */
+.static-path-decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 
 /* Enhanced Ground Platform */
@@ -652,7 +849,7 @@ body {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 300%;
+    width: 600%;
     height: 120px;
     background: 
         /* Subtle noise texture overlay */
@@ -675,11 +872,14 @@ body {
         inset 0 -3px 10px rgba(0,0,0,0.3),
         0 -8px 20px rgba(0,0,0,0.25),
         0 -2px 8px rgba(0,0,0,0.15);
+    transform: translateX(-16.66%);
     animation: ground-scroll 12s linear infinite;
     z-index: 3;
     /* Add subtle texture through filter */
     filter: contrast(1.1) saturate(1.05);
 }
+
+
 
 .ground-platform::before {
     content: '';
@@ -1245,10 +1445,7 @@ body {
 .character {
     position: absolute;
     bottom: 120px;
-    left: 50%;
-    transform: translateX(-50%);
     z-index: 10;
-    animation: character-bob 0.6s ease-in-out infinite alternate;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
 }
@@ -1257,54 +1454,49 @@ body {
     opacity: 1;
 }
 
-.character-body {
+/* User Character (Front) */
+.character-user {
+    left: calc(50% + 150px);
+    transform: translateX(-50%);
+    z-index: 12;
+}
+
+.character-user .character-block {
     width: 50px;
     height: 100px;
-    background: #333;
-    border-radius: 25px 25px 10px 10px;
-    position: relative;
+    background: #2c3e50;
+    border-radius: 5px;
 }
 
-.character-legs {
-    position: relative;
-    width: 50px;
+/* Girlfriend Character (Middle) */
+.character-girlfriend {
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 11;
+}
+
+.character-girlfriend .character-block {
+    width: 45px;
+    height: 95px;
+    background: #e74c3c;
+    border-radius: 5px;
+}
+
+/* Dog Character (Back) */
+.character-dog {
+    left: calc(50% - 150px);
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.character-dog .character-block {
+    width: 40px;
     height: 30px;
-    margin-top: -10px;
+    background: #8b4513;
+    border-radius: 5px;
 }
 
-.leg {
-    position: absolute;
-    width: 15px;
-    height: 30px;
-    background: #333;
-    border-radius: 8px;
-    bottom: 0;
-}
 
-.left-leg {
-    left: 8px;
-    animation: left-leg-run 0.8s ease-in-out infinite;
-}
-
-.right-leg {
-    right: 8px;
-    animation: right-leg-run 0.8s ease-in-out infinite;
-}
-
-@keyframes character-bob {
-    0% { transform: translateX(-50%) translateY(0px); }
-    100% { transform: translateX(-50%) translateY(-5px); }
-}
-
-@keyframes left-leg-run {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(-20deg); }
-}
-
-@keyframes right-leg-run {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(20deg); }
-}
 
 /* Month Overlay */
 .month-overlay {
@@ -1352,6 +1544,11 @@ body {
     pointer-events: none;
 }
 
+/* Final transition with visible ground */
+.black-transition.final-transition {
+    height: calc(100% - 80px);
+}
+
 .black-transition.fade-in {
     background: rgba(0, 0, 0, 0.95);
     opacity: 1;
@@ -1376,6 +1573,30 @@ body {
 }
 
 .transition-month-text.show {
+    opacity: 1;
+}
+
+.transition-year-text {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    z-index: 1000;
+    transform: translateX(-50%);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: normal;
+    color: white;
+    text-shadow: 
+        2px 2px 8px rgba(0,0,0,0.8),
+        0 0 20px rgba(255,255,255,0.4);
+    text-align: center;
+    letter-spacing: 1px;
+    opacity: 0;
+    transition: opacity 1.2s ease-out;
+    animation: transition-glow 2s ease-in-out infinite alternate;
+    z-index: 30; /* Ensure it's above other elements */
+}
+
+.transition-year-text.show {
     opacity: 1;
 }
 
@@ -1418,6 +1639,23 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    /* Fast star fade-out on mobile */
+    .stars {
+        transition: opacity 1.5s ease-in-out;
+    }
+    
+    .bright-stars {
+        transition: opacity 1.5s ease-in-out;
+    }
+    
+    .sparkling-stars {
+        transition: opacity 1.5s ease-in-out;
+    }
+    
+    .comet {
+        transition: opacity 1.5s ease-in-out;
+    }
+    
     .play-button {
         padding: 15px 30px;
         font-size: 16px;
@@ -1435,19 +1673,36 @@ body {
         bottom: 100px;
     }
     
-    .character-body {
+    .character-user {
+        left: calc(50% + 120px);
+    }
+    
+    .character-dog {
+        left: calc(50% - 120px);
+    }
+    
+    .character-user .character-block {
         width: 40px;
         height: 80px;
     }
     
-    .character-legs {
-        width: 40px;
-        height: 25px;
+    .character-girlfriend .character-block {
+        width: 36px;
+        height: 76px;
     }
     
-    .leg {
-        width: 12px;
-        height: 25px;
+    .character-dog .character-block {
+        width: 32px;
+        height: 24px;
+    }
+    
+    .pan-user-character {
+        bottom: 100px;
+    }
+    
+    .pan-user-character .character-block {
+        width: 40px;
+        height: 80px;
     }
     
 
@@ -1494,19 +1749,36 @@ body {
         bottom: 80px;
     }
     
-    .character-body {
+    .character-user {
+        left: calc(50% + 100px);
+    }
+    
+    .character-dog {
+        left: calc(50% - 100px);
+    }
+    
+    .character-user .character-block {
+        height: 100px;
+        width: 50px;
+    }
+    
+    .character-girlfriend .character-block {
+        width: 32px;
+        height: 66px;
+    }
+    
+    .character-dog .character-block {
+        width: 28px;
+        height: 20px;
+    }
+    
+    .pan-user-character {
+        bottom: 80px;
+    }
+    
+    .pan-user-character .character-block {
         width: 35px;
         height: 70px;
-    }
-    
-    .character-legs {
-        width: 35px;
-        height: 20px;
-    }
-    
-    .leg {
-        width: 10px;
-        height: 20px;
     }
     
     .flower {
@@ -1552,3 +1824,1116 @@ body {
     50% { opacity: 0.3; }
     100% { opacity: 1; }
 } 
+
+/* Pan User Character (for pan down sequence) */
+.pan-user-character {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15;
+    opacity: 1;
+}
+
+.pan-user-character .character-block {
+    width: 50px;
+    height: 100px;
+    background: #2c3e50;
+    border-radius: 5px;
+}
+
+/* Snow Effect for December */
+.snow-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 20;
+    overflow: hidden;
+}
+
+.snowflake {
+    position: absolute;
+    color: white;
+    font-size: 1em;
+    animation: snow-fall linear infinite;
+    opacity: 0.8;
+    text-shadow: 0 0 5px rgba(255,255,255,0.8);
+}
+
+@keyframes snow-fall {
+    0% {
+        transform: translateY(-100px) translateX(0px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px)) translateX(var(--drift)) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Different snowflake sizes */
+.snowflake.small {
+    font-size: 0.6em;
+    animation-duration: 8s;
+}
+
+.snowflake.medium {
+    font-size: 1em;
+    animation-duration: 10s;
+}
+
+.snowflake.large {
+    font-size: 1.4em;
+    animation-duration: 12s;
+}
+
+/* Pan User Character (for pan down sequence) */
+
+/* ============================================
+   SEASONAL GROUND DECORATIONS
+   ============================================ */
+
+/* ---- SUNFLOWERS (July) ---- */
+.sunflower {
+    position: absolute;
+    z-index: 4;
+}
+
+.sunflower-1 {
+    left: 15%;
+    top: -15px;
+    transform: scale(1.0);
+}
+
+.sunflower-2 {
+    left: 35%;
+    top: -10px;
+    transform: scale(0.8);
+}
+
+.sunflower-3 {
+    left: 65%;
+    top: -20px;
+    transform: scale(1.2);
+}
+
+.sunflower-4 {
+    left: 85%;
+    top: -12px;
+    transform: scale(0.9);
+}
+
+.sunflower-center {
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle, #8B4513 0%, #654321 60%, #2F1B14 100%);
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+}
+
+.sunflower-petal {
+    position: absolute;
+    width: 20px;
+    height: 60px;
+    background: linear-gradient(to bottom, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+    border-radius: 50% 50% 80% 80%;
+    top: -15px;
+    left: 5px;
+    transform-origin: bottom center;
+    box-shadow: 
+        0 0 6px rgba(255, 215, 0, 0.6),
+        inset 0 6px 12px rgba(255, 255, 255, 0.3);
+}
+
+.sunflower-petal::before,
+.sunflower-petal::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 60px;
+    background: linear-gradient(to bottom, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+    border-radius: 50% 50% 80% 80%;
+    top: 0;
+    left: 0;
+    box-shadow: 
+        0 0 6px rgba(255, 215, 0, 0.6),
+        inset 0 6px 12px rgba(255, 255, 255, 0.3);
+}
+
+.sunflower-petal::before {
+    transform: rotate(45deg);
+}
+
+.sunflower-petal::after {
+    transform: rotate(-45deg);
+}
+
+.sunflower-stem {
+    position: absolute;
+    width: 6px;
+    height: 50px;
+    background: linear-gradient(to bottom, #228B22 0%, #006400 100%);
+    top: 30px;
+    left: 12px;
+    border-radius: 3px;
+}
+
+/* ---- WHEAT STALKS (August) ---- */
+.wheat {
+    position: absolute;
+    z-index: 4;
+}
+
+.wheat-1 {
+    left: 12%;
+    top: -25px;
+    transform: scale(1.0) rotate(-5deg);
+}
+
+.wheat-2 {
+    left: 28%;
+    top: -20px;
+    transform: scale(0.9) rotate(3deg);
+}
+
+.wheat-3 {
+    left: 45%;
+    top: -28px;
+    transform: scale(1.1) rotate(-2deg);
+}
+
+.wheat-4 {
+    left: 68%;
+    top: -22px;
+    transform: scale(0.8) rotate(4deg);
+}
+
+.wheat-5 {
+    left: 88%;
+    top: -25px;
+    transform: scale(1.0) rotate(-3deg);
+}
+
+.wheat-grain {
+    width: 10px;
+    height: 45px;
+    background: linear-gradient(to bottom, #F4A460 0%, #DAA520 50%, #B8860B 100%);
+    border-radius: 3px 3px 8px 8px;
+    position: relative;
+    box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.3),
+        0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.wheat-grain::before {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 6px;
+    background: #8B7355;
+    top: 6px;
+    left: 3px;
+    border-radius: 2px;
+}
+
+.wheat-stalk {
+    position: absolute;
+    width: 3px;
+    height: 25px;
+    background: linear-gradient(to bottom, #9ACD32 0%, #556B2F 100%);
+    top: 45px;
+    left: 3px;
+}
+
+/* ---- ACORNS (September) ---- */
+.acorn {
+    position: absolute;
+    z-index: 4;
+}
+
+.acorn-1 {
+    left: 20%;
+    top: -5px;
+    transform: scale(1.0) rotate(10deg);
+}
+
+.acorn-2 {
+    left: 45%;
+    top: -2px;
+    transform: scale(0.8) rotate(-5deg);
+}
+
+.acorn-3 {
+    left: 70%;
+    top: -8px;
+    transform: scale(1.1) rotate(15deg);
+}
+
+.acorn-4 {
+    left: 90%;
+    top: -3px;
+    transform: scale(0.9) rotate(-10deg);
+}
+
+.acorn-cap {
+    width: 14px;
+    height: 10px;
+    background: linear-gradient(to bottom, #8B4513 0%, #654321 100%);
+    border-radius: 7px 7px 0 0;
+    position: relative;
+}
+
+.acorn-cap::before {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 3px;
+    background: #654321;
+    top: 3px;
+    left: 0;
+    border-radius: 50%;
+}
+
+.acorn-nut {
+    position: absolute;
+    width: 12px;
+    height: 18px;
+    background: linear-gradient(to bottom, #D2691E 0%, #A0522D 100%);
+    border-radius: 0 0 6px 6px;
+    top: 10px;
+    left: 1px;
+    box-shadow: inset 0 3px 3px rgba(255, 255, 255, 0.3);
+}
+
+.fall-leaf {
+    position: absolute;
+    width: 18px;
+    height: 14px;
+    border-radius: 0 100% 0 100%;
+    z-index: 4;
+}
+
+.fall-leaf-1 {
+    left: 25%;
+    top: 5px;
+    background: linear-gradient(45deg, #FF4500 0%, #FF6347 100%);
+    transform: rotate(25deg);
+}
+
+.fall-leaf-2 {
+    left: 55%;
+    top: 3px;
+    background: linear-gradient(45deg, #FFD700 0%, #FFA500 100%);
+    transform: rotate(-15deg);
+}
+
+.fall-leaf-3 {
+    left: 75%;
+    top: 7px;
+    background: linear-gradient(45deg, #DC143C 0%, #B22222 100%);
+    transform: rotate(35deg);
+}
+
+/* ---- PUMPKINS (October) ---- */
+.pumpkin {
+    position: absolute;
+    z-index: 4;
+}
+
+.pumpkin-1 {
+    left: 18%;
+    top: -10px;
+    transform: scale(1.0);
+}
+
+.pumpkin-2 {
+    left: 50%;
+    top: -7px;
+    transform: scale(0.8);
+}
+
+.pumpkin-3 {
+    left: 80%;
+    top: -12px;
+    transform: scale(1.2);
+}
+
+.pumpkin-body {
+    width: 30px;
+    height: 22px;
+    background: radial-gradient(ellipse, #FF7F00 0%, #FF4500 70%, #CC3300 100%);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.3),
+        0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.pumpkin-body::before,
+.pumpkin-body::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 22px;
+    background: #CC3300;
+    top: 0;
+    border-radius: 2px;
+}
+
+.pumpkin-body::before {
+    left: 8px;
+}
+
+.pumpkin-body::after {
+    left: 19px;
+}
+
+.pumpkin-stem {
+    position: absolute;
+    width: 6px;
+    height: 10px;
+    background: linear-gradient(to bottom, #228B22 0%, #006400 100%);
+    top: -8px;
+    left: 12px;
+    border-radius: 3px 3px 0 0;
+}
+
+.autumn-leaf {
+    position: absolute;
+    width: 14px;
+    height: 11px;
+    border-radius: 0 100% 0 100%;
+    z-index: 4;
+}
+
+.autumn-leaf-1 {
+    left: 15%;
+    top: 5px;
+    background: linear-gradient(45deg, #8B4513 0%, #A0522D 100%);
+    transform: rotate(45deg);
+}
+
+.autumn-leaf-2 {
+    left: 35%;
+    top: 7px;
+    background: linear-gradient(45deg, #CD853F 0%, #D2691E 100%);
+    transform: rotate(-30deg);
+}
+
+.autumn-leaf-3 {
+    left: 65%;
+    top: 3px;
+    background: linear-gradient(45deg, #DAA520 0%, #B8860B 100%);
+    transform: rotate(20deg);
+}
+
+.autumn-leaf-4 {
+    left: 85%;
+    top: 8px;
+    background: linear-gradient(45deg, #FF8C00 0%, #FF4500 100%);
+    transform: rotate(-10deg);
+}
+
+/* ---- TURKEY FEATHERS (November) ---- */
+.turkey-feather {
+    position: absolute;
+    width: 10px;
+    height: 45px;
+    border-radius: 50% 50% 0 0;
+    z-index: 4;
+}
+
+.feather-1 {
+    left: 25%;
+    top: -25px;
+    background: linear-gradient(to bottom, #8B4513 0%, #654321 50%, #2F1B14 100%);
+    transform: rotate(15deg);
+}
+
+.feather-2 {
+    left: 50%;
+    top: -28px;
+    background: linear-gradient(to bottom, #CD853F 0%, #A0522D 50%, #8B4513 100%);
+    transform: rotate(-10deg);
+}
+
+.feather-3 {
+    left: 75%;
+    top: -22px;
+    background: linear-gradient(to bottom, #D2691E 0%, #CD853F 50%, #A0522D 100%);
+    transform: rotate(25deg);
+}
+
+.corn {
+    position: absolute;
+    z-index: 4;
+}
+
+.corn-1 {
+    left: 15%;
+    top: -10px;
+    transform: scale(1.0);
+}
+
+.corn-2 {
+    left: 80%;
+    top: -8px;
+    transform: scale(0.9);
+}
+
+.corn-kernels {
+    width: 14px;
+    height: 30px;
+    background: linear-gradient(to bottom, #FFD700 0%, #DAA520 50%, #B8860B 100%);
+    border-radius: 3px;
+    position: relative;
+}
+
+.corn-kernels::before {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #8B7355;
+    top: 6px;
+    left: 3px;
+    border-radius: 50%;
+    box-shadow: 
+        0 6px 0 #8B7355,
+        6px 0 0 #8B7355,
+        6px 6px 0 #8B7355;
+}
+
+.corn-husk {
+    position: absolute;
+    width: 6px;
+    height: 35px;
+    background: linear-gradient(to bottom, #9ACD32 0%, #556B2F 100%);
+    top: -3px;
+    left: 4px;
+    border-radius: 3px;
+}
+
+/* ---- HOLLY BERRIES (December) ---- */
+.holly {
+    position: absolute;
+    z-index: 4;
+}
+
+.holly-1 {
+    left: 20%;
+    top: -8px;
+    transform: scale(1.0);
+}
+
+.holly-2 {
+    left: 45%;
+    top: -5px;
+    transform: scale(0.8);
+}
+
+.holly-3 {
+    left: 70%;
+    top: -10px;
+    transform: scale(1.1);
+}
+
+.holly-4 {
+    left: 88%;
+    top: -6px;
+    transform: scale(0.9);
+}
+
+.holly-berries {
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, #DC143C 0%, #8B0000 100%);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 
+        9px 0 0 #DC143C,
+        0 9px 0 #DC143C,
+        9px 9px 0 #8B0000;
+}
+
+.holly-leaf {
+    position: absolute;
+    width: 20px;
+    height: 14px;
+    background: linear-gradient(45deg, #228B22 0%, #006400 100%);
+    top: 12px;
+    left: -7px;
+    border-radius: 0 50% 0 50%;
+    clip-path: polygon(0% 50%, 25% 0%, 50% 50%, 75% 0%, 100% 50%, 75% 100%, 50% 50%, 25% 100%);
+}
+
+/* ---- SNOWMEN (January) ---- */
+.mini-snowman {
+    position: absolute;
+    z-index: 4;
+}
+
+.snowman-1 {
+    left: 30%;
+    top: -15px;
+    transform: scale(1.0);
+}
+
+.snowman-2 {
+    left: 70%;
+    top: -12px;
+    transform: scale(0.8);
+}
+
+.snowman-head {
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, #FFFFFF 0%, #F0F8FF 100%);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.snowman-head::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #000;
+    top: 3px;
+    left: 3px;
+    border-radius: 50%;
+}
+
+.snowman-body {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: radial-gradient(circle, #FFFFFF 0%, #F0F8FF 100%);
+    border-radius: 50%;
+    top: 10px;
+    left: -2px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.snowman-base {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle, #FFFFFF 0%, #F0F8FF 100%);
+    border-radius: 50%;
+    top: 24px;
+    left: -4px;
+    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.2);
+}
+
+.icicle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    z-index: 4;
+}
+
+.icicle-1 {
+    left: 15%;
+    top: 0px;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 25px solid #B0E0E6;
+    filter: drop-shadow(0 3px 3px rgba(0,0,0,0.2));
+}
+
+.icicle-2 {
+    left: 55%;
+    top: 0px;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 20px solid #ADD8E6;
+    filter: drop-shadow(0 3px 3px rgba(0,0,0,0.2));
+}
+
+.icicle-3 {
+    left: 85%;
+    top: 0px;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 30px solid #87CEEB;
+    filter: drop-shadow(0 3px 3px rgba(0,0,0,0.2));
+}
+
+/* ---- VALENTINE HEARTS (February) ---- */
+.valentine-heart {
+    position: absolute;
+    width: 20px;
+    height: 18px;
+    z-index: 4;
+}
+
+.heart-1 {
+    left: 25%;
+    top: -5px;
+    transform: scale(1.0) rotate(10deg);
+}
+
+.heart-2 {
+    left: 55%;
+    top: -8px;
+    transform: scale(0.8) rotate(-15deg);
+}
+
+.heart-3 {
+    left: 80%;
+    top: -2px;
+    transform: scale(1.2) rotate(5deg);
+}
+
+.valentine-heart::before {
+    content: '';
+    width: 20px;
+    height: 18px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: radial-gradient(circle, #FF1493 0%, #DC143C 100%);
+    border-radius: 10px 10px 0 0;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.valentine-heart::after {
+    content: '';
+    width: 20px;
+    height: 18px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: radial-gradient(circle, #FF1493 0%, #DC143C 100%);
+    border-radius: 10px 10px 0 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.red-rose {
+    position: absolute;
+    z-index: 4;
+}
+
+.rose-1 {
+    left: 15%;
+    top: -10px;
+    transform: scale(1.0);
+}
+
+.rose-2 {
+    left: 45%;
+    top: -7px;
+    transform: scale(0.9);
+}
+
+.rose-3 {
+    left: 70%;
+    top: -12px;
+    transform: scale(1.1);
+}
+
+.rose-bloom {
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle, #FF0000 0%, #8B0000 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: relative;
+    box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.3),
+        0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.rose-stem {
+    position: absolute;
+    width: 3px;
+    height: 25px;
+    background: linear-gradient(to bottom, #228B22 0%, #006400 100%);
+    top: 18px;
+    left: 7px;
+}
+
+/* ---- SHAMROCKS (March) ---- */
+.shamrock {
+    position: absolute;
+    z-index: 4;
+}
+
+.shamrock-1 {
+    left: 20%;
+    top: -8px;
+    transform: scale(1.0);
+}
+
+.shamrock-2 {
+    left: 40%;
+    top: -5px;
+    transform: scale(0.8);
+}
+
+.shamrock-3 {
+    left: 65%;
+    top: -10px;
+    transform: scale(1.1);
+}
+
+.shamrock-4 {
+    left: 85%;
+    top: -6px;
+    transform: scale(0.9);
+}
+
+.shamrock-leaf {
+    width: 18px;
+    height: 14px;
+    position: relative;
+}
+
+.shamrock-leaf::before,
+.shamrock-leaf::after {
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: radial-gradient(circle, #00FF00 0%, #228B22 100%);
+    border-radius: 50% 50% 50% 0;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.shamrock-leaf::before {
+    top: 0;
+    left: 0;
+    transform: rotate(-45deg);
+}
+
+.shamrock-leaf::after {
+    top: 0;
+    right: 0;
+    transform: rotate(45deg);
+}
+
+.shamrock-leaf {
+    background: radial-gradient(circle, #00FF00 0%, #228B22 100%);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(180deg);
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.shamrock-stem {
+    position: absolute;
+    width: 3px;
+    height: 20px;
+    background: linear-gradient(to bottom, #228B22 0%, #006400 100%);
+    top: 14px;
+    left: 7px;
+}
+
+.spring-bud {
+    position: absolute;
+    width: 10px;
+    height: 14px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    z-index: 4;
+}
+
+.bud-1 {
+    left: 30%;
+    top: 0px;
+    background: linear-gradient(to bottom, #90EE90 0%, #32CD32 100%);
+}
+
+.bud-2 {
+    left: 75%;
+    top: 2px;
+    background: linear-gradient(to bottom, #98FB98 0%, #00FF7F 100%);
+}
+
+/* ---- TULIPS (April) ---- */
+.tulip {
+    position: absolute;
+    z-index: 4;
+}
+
+.tulip-1 {
+    left: 15%;
+    top: -15px;
+    transform: scale(1.0);
+}
+
+.tulip-2 {
+    left: 35%;
+    top: -12px;
+    transform: scale(0.9);
+}
+
+.tulip-3 {
+    left: 60%;
+    top: -18px;
+    transform: scale(1.1);
+}
+
+.tulip-4 {
+    left: 85%;
+    top: -14px;
+    transform: scale(0.8);
+}
+
+.tulip-bloom {
+    width: 14px;
+    height: 22px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: relative;
+    box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.3),
+        0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.tulip-1 .tulip-bloom {
+    background: linear-gradient(to bottom, #FF69B4 0%, #FF1493 100%);
+}
+
+.tulip-2 .tulip-bloom {
+    background: linear-gradient(to bottom, #FFD700 0%, #FFA500 100%);
+}
+
+.tulip-3 .tulip-bloom {
+    background: linear-gradient(to bottom, #9370DB 0%, #8A2BE2 100%);
+}
+
+.tulip-4 .tulip-bloom {
+    background: linear-gradient(to bottom, #FF6347 0%, #FF4500 100%);
+}
+
+.tulip-stem {
+    position: absolute;
+    width: 3px;
+    height: 25px;
+    background: linear-gradient(to bottom, #228B22 0%, #006400 100%);
+    top: 22px;
+    left: 5px;
+}
+
+.cherry-blossom {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    z-index: 4;
+}
+
+.blossom-1 {
+    left: 25%;
+    top: 2px;
+    transform: scale(1.0);
+}
+
+.blossom-2 {
+    left: 75%;
+    top: 1px;
+    transform: scale(0.8);
+}
+
+.cherry-blossom::before {
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: radial-gradient(circle, #FFB6C1 0%, #FF69B4 100%);
+    border-radius: 0 100% 0 100%;
+    top: 0;
+    left: 0;
+    transform: rotate(0deg);
+}
+
+.cherry-blossom::after {
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: radial-gradient(circle, #FFB6C1 0%, #FF69B4 100%);
+    border-radius: 0 100% 0 100%;
+    top: 0;
+    right: 0;
+    transform: rotate(90deg);
+}
+
+.cherry-blossom {
+    background: radial-gradient(circle, #FFB6C1 0%, #FF69B4 100%);
+    border-radius: 0 100% 0 100%;
+    transform: rotate(180deg);
+    position: relative;
+}
+
+/* ---- LILACS (May) ---- */
+.lilac {
+    position: absolute;
+    z-index: 4;
+}
+
+.lilac-1 {
+    left: 20%;
+    top: -20px;
+    transform: scale(1.0);
+}
+
+.lilac-2 {
+    left: 50%;
+    top: -16px;
+    transform: scale(0.9);
+}
+
+.lilac-3 {
+    left: 80%;
+    top: -22px;
+    transform: scale(1.1);
+}
+
+.lilac-cluster {
+    width: 10px;
+    height: 28px;
+    background: linear-gradient(to bottom, #DDA0DD 0%, #9370DB 50%, #8A2BE2 100%);
+    border-radius: 3px 3px 6px 6px;
+    position: relative;
+    box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.3),
+        0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.lilac-cluster::before {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #E6E6FA;
+    border-radius: 50%;
+    top: 6px;
+    left: 3px;
+    box-shadow: 
+        0 6px 0 #E6E6FA,
+        0 12px 0 #E6E6FA;
+}
+
+.lilac-stem {
+    position: absolute;
+    width: 3px;
+    height: 20px;
+    background: linear-gradient(to bottom, #228B22 0%, #006400 100%);
+    top: 28px;
+    left: 3px;
+}
+
+.spring-flower {
+    position: absolute;
+    z-index: 4;
+}
+
+.spring-1 {
+    left: 15%;
+    top: -5px;
+    transform: scale(1.0);
+}
+
+.spring-2 {
+    left: 40%;
+    top: -2px;
+    transform: scale(0.8);
+}
+
+.spring-3 {
+    left: 70%;
+    top: -8px;
+    transform: scale(1.2);
+}
+
+.spring-center {
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, #FFFF00 0%, #FFD700 100%);
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+}
+
+.spring-petal {
+    position: absolute;
+    width: 6px;
+    height: 18px;
+    background: linear-gradient(to bottom, #FFFFFF 0%, #F0F8FF 100%);
+    border-radius: 50% 50% 80% 80%;
+    top: -4px;
+    left: 2px;
+    transform-origin: bottom center;
+    box-shadow: 
+        0 0 3px rgba(255, 255, 255, 0.6),
+        inset 0 3px 3px rgba(255, 255, 255, 0.8);
+}
+
+.spring-petal::before,
+.spring-petal::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 18px;
+    background: linear-gradient(to bottom, #FFFFFF 0%, #F0F8FF 100%);
+    border-radius: 50% 50% 80% 80%;
+    top: 0;
+    left: 0;
+    box-shadow: 
+        0 0 3px rgba(255, 255, 255, 0.6),
+        inset 0 3px 3px rgba(255, 255, 255, 0.8);
+}
+
+.spring-petal::before {
+    transform: rotate(72deg);
+}
+
+.spring-petal::after {
+    transform: rotate(-72deg);
+}
+
+.spring-stem {
+    position: absolute;
+    width: 3px;
+    height: 20px;
+    background: linear-gradient(to bottom, #90EE90 0%, #32CD32 100%);
+    top: 10px;
+    left: 3px;
+}
+
+/* Mobile Responsive Adjustments for Seasonal Elements */
+@media (max-width: 768px) {
+    .sunflower, .wheat, .acorn, .pumpkin, .turkey-feather, .corn,
+    .holly, .mini-snowman, .valentine-heart, .red-rose, .shamrock,
+    .tulip, .cherry-blossom, .lilac, .spring-flower {
+        transform: scale(0.6) !important;
+    }
+    
+    .fall-leaf, .autumn-leaf, .spring-bud, .icicle {
+        transform: scale(0.7) !important;
+    }
+    
+    /* Position adjustments for mobile to prevent overflow */
+    .sunflower-1, .wheat-1, .acorn-1, .pumpkin-1, .holly-1, .snowman-1,
+    .heart-1, .rose-1, .shamrock-1, .tulip-1, .lilac-1, .spring-1 {
+        top: -8px !important;
+    }
+    
+    .sunflower-3, .wheat-3, .acorn-3, .pumpkin-3, .holly-3,
+    .heart-3, .rose-3, .shamrock-3, .tulip-3, .lilac-3, .spring-3 {
+        top: -10px !important;
+    }
+}

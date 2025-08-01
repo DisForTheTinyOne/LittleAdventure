@@ -13,15 +13,21 @@ class AnniversaryAnimation {
             'February',
             'March',
             'April',
-            'May'        // 1-year anniversary
+            'May',       
+            "June"
         ];
         
         this.currentMonth = 0;
-        this.monthDuration = 11000; // 12 seconds per month
+        this.monthDuration = 11000;
         this.isAnimating = false;
         
         this.initializeElements();
         this.bindEvents();
+        
+        // Set initial seasonal decorations (June flowers)
+        setTimeout(() => {
+            this.updateSeasonalDecorations(1);
+        }, 100);
     }
     
     initializeElements() {
@@ -37,15 +43,21 @@ class AnniversaryAnimation {
         this.skyGradient = document.querySelector('.sky-gradient');
         this.mainScene = document.getElementById('main-scene');
         this.backgroundLayer = document.getElementById('background-layer');
-        this.character = document.getElementById('character');
+        this.characterUser = document.getElementById('character-user');
+        this.characterGirlfriend = document.getElementById('character-girlfriend');
+        this.characterDog = document.getElementById('character-dog');
         this.monthOverlay = document.getElementById('month-overlay');
         this.monthText = document.getElementById('month-text');
         this.blackTransition = document.getElementById('black-transition');
         this.transitionMonthText = document.getElementById('transition-month-text');
+        this.transitionYearText = document.getElementById('transition-year-text');
+        this.pathDecorations = document.querySelector('.path-decorations');
 
         this.backgroundMusic = document.getElementById('background-music');
         this.isFirstMonth = true;
         this.starAnimations = [];
+        this.snowContainer = null;
+        this.snowInterval = null;
     }
     
     bindEvents() {
@@ -66,17 +78,14 @@ class AnniversaryAnimation {
     calculatePanDistance() {
         const containerHeight = 2000; // Height of .pan-image container
         const viewportHeight = window.innerHeight;
-        const bottomOffset = 20; // 20px from bottom
+        const groundHeight = 80; // Only show 80px of ground, similar to month transitions
         
-        // Calculate how much to translate to show the bottom portion
-        // We want to move the container up so its bottom is near the viewport bottom
-        const translateDistance = -(containerHeight - viewportHeight - bottomOffset);
+        // Calculate how much to translate to show only 80px of ground at the bottom of viewport
+        // First move container up to show the bottom part: -(containerHeight - groundHeight)
+        // Then adjust to position those 80px at the bottom of viewport: +(viewportHeight - groundHeight)
+        const translateDistance = -(containerHeight - groundHeight) + (viewportHeight - groundHeight);
         
-        // Always pan at least 50% of the container height for desktop
-        const minPanDistance = -(containerHeight * 0.5);
-        
-        // Use whichever gives more panning (more negative value)
-        return Math.min(minPanDistance, translateDistance);
+        return translateDistance;
     }
     
     getRandomStartPosition() {
@@ -217,6 +226,7 @@ class AnniversaryAnimation {
                 this.startMonthSequence();
             }, 2000);
         }, 9500);
+        // }, 250000);
     }
     
     playMusicWithFadeIn() {
@@ -266,31 +276,39 @@ class AnniversaryAnimation {
     continueFirstMonthTransition() {
         const monthName = this.months[0];
 
+        // Show all characters when first month black screen appears
+        this.characterUser.classList.add('show');
+        this.characterGirlfriend.classList.add('show');
+        this.characterDog.classList.add('show');
+
         this.monthText.textContent = monthName;
         this.monthOverlay.classList.add('show');
         this.blackTransition.style.transition = 'opacity 0s ease-in-out';
         this.blackTransition.style.opacity = '1';
         
+        // Show year text for June (the initial month)
+        this.transitionMonthText.textContent = monthName;
+        this.transitionYearText.textContent = '2024';
+
+        setTimeout(() => {
+            this.transitionYearText.style.opacity = '1';
+        }, 1000);
+        
         // Update background when black screen is fully opaque (after 1s fade + some buffer)
         setTimeout(() => {
             this.updateBackground(1);
-            // Show character after first month's background is set
+            // Set first month flag (user character visible in pan container)
             if (this.isFirstMonth) {
-                this.character.classList.add('show');
                 this.isFirstMonth = false;
             }
         }, 1500);
         
         setTimeout(() => {
+            this.transitionYearText.style.opacity = '0';
             this.blackTransition.style.transition = 'opacity 1s ease-in-out';
             this.blackTransition.style.opacity = '0';
         }, 2000);
-        
-        // Hide transition text slightly after scene text appears
-        setTimeout(() => {
-            this.transitionMonthText.classList.remove('show');
-        }, 4000);
-        
+
         // Reset black screen for future transitions and hide month overlay
         setTimeout(() => {
             this.blackTransition.style.transition = '';
@@ -317,6 +335,8 @@ class AnniversaryAnimation {
         // Show month text on black screen during fade in
         setTimeout(() => {
             this.transitionMonthText.classList.add('show');
+            // Make sure year text is hidden for all months after June
+
         }, 800);
         
         // Update background when black screen is fully opaque
@@ -330,15 +350,12 @@ class AnniversaryAnimation {
             this.blackTransition.style.opacity = '0';
         }, 2500);
         
-        // Show month overlay on scene as black screen fades
-        setTimeout(() => {
-            this.monthText.textContent = monthName;
-            this.monthOverlay.classList.add('show');
-        }, 3000);
         
         // Hide transition text slightly after scene text appears
         setTimeout(() => {
+            this.transitionMonthText.style.transition = 'opacity 1s ease-in-out';
             this.transitionMonthText.classList.remove('show');
+            // Ensure year text is always hidden for all months after June
         }, 3400);
         
         // Hide month overlay and reset black screen
@@ -350,30 +367,185 @@ class AnniversaryAnimation {
     }
     
     transitionToNextMonth() {
-        this.showMonthWithTransition(this.currentMonth);
+        // Check if this is the last month (June)
+        if (this.currentMonth === this.months.length - 1) {
+            this.showFinalJuneTransition();
+        } else {
+            this.showMonthWithTransition(this.currentMonth);
+        }
     }
     
-    updateBackground(gradientNumber) {
-        // Get the background for this gradient number
-        const backgrounds = {
-            1: "url('images/1.png') center no-repeat, linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%)",
-            2: "url('images/2.png') center no-repeat, linear-gradient(90deg, #a8edea 0%, #fed6e3 100%)",
-            3: "linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%)",
-            4: "linear-gradient(90deg, #ff8a80 0%, #ea6100 100%)",
-            5: "linear-gradient(90deg, #8fd3f4 0%, #84fab0 100%)",
-            6: "linear-gradient(90deg, #cbaacb 0%, #ffccb6 100%)",
-            7: "linear-gradient(90deg, #3b4371 0%, #f3904f 100%)",
-            8: "linear-gradient(90deg, #b721ff 0%, #21d4fd 100%)",
-            9: "linear-gradient(90deg, #f093fb 0%, #f5576c 100%)",
-            10: "linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)",
-            11: "linear-gradient(90deg, #43e97b 0%, #38f9d7 100%)",
-            12: "linear-gradient(90deg, #fa709a 0%, #fee140 100%)"
-        };
+    showFinalJuneTransition() {
+        const monthName = this.months[this.currentMonth];
+        
+        // Bring characters above the black screen BEFORE it fades in
+        this.characterUser.style.zIndex = '30';
+        this.characterGirlfriend.style.zIndex = '30';
+        this.characterDog.style.zIndex = '30';
+        
+        // Start black screen fade-in transition
+        this.blackTransition.classList.add('final-transition');
+        this.blackTransition.style.visibility = 'visible';
+        this.blackTransition.style.opacity = '0';
+        this.blackTransition.style.transition = 'opacity 1s ease-in-out';
+        this.transitionMonthText.textContent = monthName;
+        
+        // Fade in black screen
+        setTimeout(() => {
+            this.blackTransition.style.opacity = '1';
+        }, 100);
+        
+        // Show month text on black screen
+        setTimeout(() => {
+            this.transitionMonthText.classList.add('show');
+        }, 800);
+        
+        // Move characters after black screen is visible
+        setTimeout(() => {
+            // Move girlfriend off screen to the right (slower)
+            this.characterGirlfriend.style.transition = 'left 4s ease-in-out';
+            this.characterGirlfriend.style.left = 'calc(120% + 150px)';
+            
+            // Move dog off screen to the right (slower) - maintaining same distance
+            this.characterDog.style.transition = 'left 4s ease-in-out';
+            this.characterDog.style.left = '120%';
+        }, 1500);
+        
+        // Center the user character with additional delay
+        setTimeout(() => {
+            this.characterUser.style.transition = 'left 4s ease-in-out';
+            this.characterUser.style.left = '50%';
+            
+            // Stop ground animation to represent character stopping running
+            const groundPlatform = document.getElementById('ground-platform');
+            if (groundPlatform) {
+                groundPlatform.style.animationPlayState = 'paused';
+            }
+        }, 3000);
+        
+        // After user character is centered, wait 1.5s then fade in the panned landing page on top of black screen
+        setTimeout(() => {
+            // Prepare landing page (keep animation container visible)
+            
+            // Ensure pan image is in its final panned position
+            const translateDistance = this.calculatePanDistance();
+            this.panImage.style.transform = `translateY(${translateDistance}px)`;
+            
+            // Set landing page z-index higher than black screen to ensure it appears on top
+            this.landingPage.style.zIndex = '35';
+            this.skyTransition.style.zIndex = '35';
+            
+            // Set landing page to be invisible initially, then fade it in on top of black screen
+            this.landingPage.style.opacity = '0';
+            this.landingPage.style.transition = 'opacity 2s ease-in-out';
+            this.skyTransition.style.opacity = '0';
+            this.skyTransition.style.transition = 'opacity 2s ease-in-out';
+            
+            // Hide transition month text
+            this.transitionMonthText.style.transition = 'opacity 1s ease-in-out';
+            this.transitionMonthText.classList.remove('show');
+            
+            // Keep black screen visible and don't fade it out - landing page fades in on top
+            
+            // Fade in the landing page on top of the black screen
+            setTimeout(() => {
+                this.landingPage.style.opacity = '1';
+                this.skyTransition.style.opacity = '1';
+            }, 500);
+        }, 7500);
+        
+        // Fade out animation container 1 second after landing page finishes fading in
+        setTimeout(() => {
+            this.animationContainer.style.transition = 'opacity 0s ease-out';
+            this.animationContainer.style.opacity = '0';
+        }, 9000);
+    }
+    
+    createSnowContainer() {
+        if (!this.snowContainer) {
+            this.snowContainer = document.createElement('div');
+            this.snowContainer.className = 'snow-container';
+            this.mainScene.appendChild(this.snowContainer);
+        }
+    }
+    
+    createSnowflake() {
+        if (!this.snowContainer) return;
+        
+        const snowflake = document.createElement('div');
+        snowflake.className = 'snowflake';
+        snowflake.textContent = '❄';
+        
+        // Random size
+        const sizes = ['small', 'medium', 'large'];
+        const size = sizes[Math.floor(Math.random() * sizes.length)];
+        snowflake.classList.add(size);
+        
+        // Random starting position
+        snowflake.style.left = Math.random() * 100 + '%';
+        
+        // Random drift amount
+        const drift = (Math.random() - 0.5) * 200; // -100px to 100px
+        snowflake.style.setProperty('--drift', drift + 'px');
+        
+        // Random delay
+        snowflake.style.animationDelay = Math.random() * 2 + 's';
+        
+        this.snowContainer.appendChild(snowflake);
+        
+        // Remove snowflake after animation completes
+        const duration = size === 'small' ? 8000 : size === 'medium' ? 10000 : 12000;
+        setTimeout(() => {
+            if (snowflake.parentNode) {
+                snowflake.parentNode.removeChild(snowflake);
+            }
+        }, duration + 2000);
+    }
+    
+    startSnow() {
+        this.createSnowContainer();
+        
+        // Create initial snowflakes
+        for (let i = 0; i < 15; i++) {
+            setTimeout(() => {
+                this.createSnowflake();
+            }, i * 200);
+        }
+        
+        // Continue creating snowflakes
+        this.snowInterval = setInterval(() => {
+            this.createSnowflake();
+        }, 800);
+    }
+    
+    stopSnow() {
+        if (this.snowInterval) {
+            clearInterval(this.snowInterval);
+            this.snowInterval = null;
+        }
+        
+        if (this.snowContainer) {
+            // Fade out existing snowflakes
+            this.snowContainer.style.transition = 'opacity 2s ease-out';
+            this.snowContainer.style.opacity = '0';
+            
+            setTimeout(() => {
+                if (this.snowContainer && this.snowContainer.parentNode) {
+                    this.snowContainer.parentNode.removeChild(this.snowContainer);
+                    this.snowContainer = null;
+                }
+            }, 2000);
+        }
+    }
+    
+    updateBackground(monthNumber) {
+        // Get the background image for this month
+        const backgroundImage = `url('images/${monthNumber}.png')`;
         
         // Reset background animation
         this.backgroundLayer.style.animation = 'none';
         this.backgroundLayer.offsetHeight; // Force reflow
-        this.backgroundLayer.style.animation = 'background-scroll 20s linear infinite';
+        this.backgroundLayer.style.animation = 'background-scroll 22s linear infinite';
         
         // Reset ground animation  
         const groundPlatform = document.getElementById('ground-platform');
@@ -381,22 +553,285 @@ class AnniversaryAnimation {
         groundPlatform.offsetHeight; // Force reflow
         groundPlatform.style.animation = 'ground-scroll 12s linear infinite';
         
-        // Set background
-        this.backgroundLayer.style.background = backgrounds[gradientNumber];
-        if (gradientNumber <= 2) {
-            this.backgroundLayer.style.backgroundSize = "85%, 100%";
+        // Set background image
+        this.backgroundLayer.style.background = `${backgroundImage} center bottom no-repeat`;
+        this.backgroundLayer.style.backgroundSize = "auto 100%";
+        
+        // Handle seasonal ground decorations
+        this.updateSeasonalDecorations(monthNumber);
+        
+        // Handle character visibility for March (monthNumber 10)
+        this.updateCharacterVisibility(monthNumber);
+        
+        // Handle snow effect for December (monthNumber 7)
+        if (monthNumber === 7) {
+            this.startSnow();
+        } else {
+            this.stopSnow();
         }
     }
     
+    updateCharacterVisibility(monthNumber) {
+        // March is monthNumber 10 - hide girlfriend and dog for this month only
+        if (monthNumber === 10) {
+            this.characterGirlfriend.style.opacity = '0';
+            this.characterDog.style.opacity = '0';
+        } else {
+            // Show characters for all other months
+            this.characterGirlfriend.style.opacity = '1';
+            this.characterDog.style.opacity = '1';
+        }
+    }
+    
+    updateSeasonalDecorations(gradientNumber) {
+        if (!this.pathDecorations) return;
+        
+        // Clear existing decorations
+        this.pathDecorations.innerHTML = '';
+        
+        // Define seasonal decorations for each month
+        const seasonalElements = {
+            1: this.createSummerFlowers,      // June - Summer wildflowers
+            2: this.createSunflowers,         // July - Sunflowers
+            3: this.createWheatStalks,        // August - Wheat stalks
+            4: this.createAcorns,             // September - Acorns & early fall
+            5: this.createPumpkins,           // October - Pumpkins & autumn leaves
+            6: this.createTurkeyFeathers,     // November - Turkey feathers & corn
+            7: this.createHollyBerries,       // December - Holly berries (plus snow)
+            8: this.createSnowmen,            // January - Snowmen & icicles  
+            9: this.createValentineHearts,    // February - Hearts & roses
+            10: this.createShamrocks,         // March - Shamrocks & spring buds
+            11: this.createTulips,            // April - Tulips & cherry blossoms
+            12: this.createLilacs,            // May - Lilacs & spring flowers
+        };
+        
+        // Create seasonal elements for current month
+        const createFunction = seasonalElements[gradientNumber];
+        if (createFunction) {
+            createFunction.call(this);
+        }
+    }
+
+    createSummerFlowers() {
+        // June - Colorful summer wildflowers (default flowers)
+        for (let i = 1; i <= 6; i++) {
+            const flower = document.createElement('div');
+            flower.className = `flower flower-${i}`;
+            flower.innerHTML = `
+                <div class="flower-center"></div>
+                <div class="petal petal-1"></div>
+                <div class="petal petal-2"></div>
+                <div class="petal petal-3"></div>
+                <div class="petal petal-4"></div>
+                <div class="petal petal-5"></div>
+                <div class="flower-stem"></div>
+            `;
+            this.pathDecorations.appendChild(flower);
+        }
+    }
+
+    createSunflowers() {
+        // July - Bright sunflowers
+        for (let i = 1; i <= 4; i++) {
+            const sunflower = document.createElement('div');
+            sunflower.className = `sunflower sunflower-${i}`;
+            sunflower.innerHTML = `
+                <div class="sunflower-center"></div>
+                <div class="sunflower-petal"></div>
+                <div class="sunflower-stem"></div>
+            `;
+            this.pathDecorations.appendChild(sunflower);
+        }
+    }
+
+    createWheatStalks() {
+        // August - Golden wheat stalks
+        for (let i = 1; i <= 5; i++) {
+            const wheat = document.createElement('div');
+            wheat.className = `wheat wheat-${i}`;
+            wheat.innerHTML = `
+                <div class="wheat-grain"></div>
+                <div class="wheat-stalk"></div>
+            `;
+            this.pathDecorations.appendChild(wheat);
+        }
+    }
+
+    createAcorns() {
+        // September - Acorns and early fall leaves
+        for (let i = 1; i <= 4; i++) {
+            const acorn = document.createElement('div');
+            acorn.className = `acorn acorn-${i}`;
+            acorn.innerHTML = `
+                <div class="acorn-cap"></div>
+                <div class="acorn-nut"></div>
+            `;
+            this.pathDecorations.appendChild(acorn);
+        }
+        
+        for (let i = 1; i <= 3; i++) {
+            const leaf = document.createElement('div');
+            leaf.className = `fall-leaf fall-leaf-${i}`;
+            this.pathDecorations.appendChild(leaf);
+        }
+    }
+
+    createPumpkins() {
+        // October - Pumpkins and autumn leaves
+        for (let i = 1; i <= 3; i++) {
+            const pumpkin = document.createElement('div');
+            pumpkin.className = `pumpkin pumpkin-${i}`;
+            pumpkin.innerHTML = `
+                <div class="pumpkin-stem"></div>
+                <div class="pumpkin-body"></div>
+            `;
+            this.pathDecorations.appendChild(pumpkin);
+        }
+        
+        for (let i = 1; i <= 4; i++) {
+            const leaf = document.createElement('div');
+            leaf.className = `autumn-leaf autumn-leaf-${i}`;
+            this.pathDecorations.appendChild(leaf);
+        }
+    }
+
+    createTurkeyFeathers() {
+        // November - Turkey feathers and corn
+        for (let i = 1; i <= 3; i++) {
+            const feather = document.createElement('div');
+            feather.className = `turkey-feather feather-${i}`;
+            this.pathDecorations.appendChild(feather);
+        }
+        
+        for (let i = 1; i <= 2; i++) {
+            const corn = document.createElement('div');
+            corn.className = `corn corn-${i}`;
+            corn.innerHTML = `
+                <div class="corn-kernels"></div>
+                <div class="corn-husk"></div>
+            `;
+            this.pathDecorations.appendChild(corn);
+        }
+    }
+
+    createHollyBerries() {
+        // December - Holly berries and leaves
+        for (let i = 1; i <= 4; i++) {
+            const holly = document.createElement('div');
+            holly.className = `holly holly-${i}`;
+            holly.innerHTML = `
+                <div class="holly-berries"></div>
+                <div class="holly-leaf"></div>
+            `;
+            this.pathDecorations.appendChild(holly);
+        }
+    }
+
+    createSnowmen() {
+        // January - Small snowmen and icicles
+        for (let i = 1; i <= 2; i++) {
+            const snowman = document.createElement('div');
+            snowman.className = `mini-snowman snowman-${i}`;
+            snowman.innerHTML = `
+                <div class="snowman-head"></div>
+                <div class="snowman-body"></div>
+                <div class="snowman-base"></div>
+            `;
+            this.pathDecorations.appendChild(snowman);
+        }
+        
+        for (let i = 1; i <= 3; i++) {
+            const icicle = document.createElement('div');
+            icicle.className = `icicle icicle-${i}`;
+            this.pathDecorations.appendChild(icicle);
+        }
+    }
+
+    createValentineHearts() {
+        // February - Hearts and red roses
+        for (let i = 1; i <= 3; i++) {
+            const heart = document.createElement('div');
+            heart.className = `valentine-heart heart-${i}`;
+            this.pathDecorations.appendChild(heart);
+        }
+        
+        for (let i = 1; i <= 3; i++) {
+            const rose = document.createElement('div');
+            rose.className = `red-rose rose-${i}`;
+            rose.innerHTML = `
+                <div class="rose-bloom"></div>
+                <div class="rose-stem"></div>
+            `;
+            this.pathDecorations.appendChild(rose);
+        }
+    }
+
+    createShamrocks() {
+        // March - Shamrocks and spring buds
+        for (let i = 1; i <= 4; i++) {
+            const shamrock = document.createElement('div');
+            shamrock.className = `shamrock shamrock-${i}`;
+            shamrock.innerHTML = `
+                <div class="shamrock-leaf"></div>
+                <div class="shamrock-stem"></div>
+            `;
+            this.pathDecorations.appendChild(shamrock);
+        }
+        
+        for (let i = 1; i <= 2; i++) {
+            const bud = document.createElement('div');
+            bud.className = `spring-bud bud-${i}`;
+            this.pathDecorations.appendChild(bud);
+        }
+    }
+
+    createTulips() {
+        // April - Colorful tulips and cherry blossoms
+        for (let i = 1; i <= 4; i++) {
+            const tulip = document.createElement('div');
+            tulip.className = `tulip tulip-${i}`;
+            tulip.innerHTML = `
+                <div class="tulip-bloom"></div>
+                <div class="tulip-stem"></div>
+            `;
+            this.pathDecorations.appendChild(tulip);
+        }
+        
+        for (let i = 1; i <= 2; i++) {
+            const blossom = document.createElement('div');
+            blossom.className = `cherry-blossom blossom-${i}`;
+            this.pathDecorations.appendChild(blossom);
+        }
+    }
+
+    createLilacs() {
+        // May - Purple lilacs and spring flowers
+        for (let i = 1; i <= 3; i++) {
+            const lilac = document.createElement('div');
+            lilac.className = `lilac lilac-${i}`;
+            lilac.innerHTML = `
+                <div class="lilac-cluster"></div>
+                <div class="lilac-stem"></div>
+            `;
+            this.pathDecorations.appendChild(lilac);
+        }
+        
+        for (let i = 1; i <= 3; i++) {
+            const springFlower = document.createElement('div');
+            springFlower.className = `spring-flower spring-${i}`;
+            springFlower.innerHTML = `
+                <div class="spring-center"></div>
+                <div class="spring-petal"></div>
+                <div class="spring-stem"></div>
+            `;
+            this.pathDecorations.appendChild(springFlower);
+        }
+    }
 
     
     completeAnimation() {
         clearInterval(this.monthInterval);
-        
-        // Show final message
-        setTimeout(() => {
-            this.showFinalMessage();
-        }, 2000);
+        // No final message - June ending is handled in showFinalJuneTransition
     }
     
     showFinalMessage() {
@@ -404,7 +839,9 @@ class AnniversaryAnimation {
         this.monthOverlay.classList.add('show');
         
         // Add special completion effects
-        this.character.style.animation = 'character-bob 0.3s ease-in-out infinite alternate, completion-celebration 2s ease-in-out infinite';
+        this.characterUser.style.animation = 'completion-celebration 2s ease-in-out infinite';
+        this.characterGirlfriend.style.animation = 'completion-celebration 2s ease-in-out infinite';
+        this.characterDog.style.animation = 'completion-celebration 2s ease-in-out infinite';
         
         // Create floating hearts effect
         this.createFloatingHearts();
@@ -493,11 +930,33 @@ class AnniversaryAnimation {
         this.panImage.style.transform = 'translateY(0)';
         this.monthOverlay.classList.remove('show');
         this.blackTransition.classList.remove('fade-in');
+        this.blackTransition.classList.remove('final-transition');
         this.blackTransition.style.opacity = '';
         this.blackTransition.style.visibility = '';
         this.transitionMonthText.classList.remove('show');
-        this.character.style.animation = '';
-        this.character.classList.remove('show');
+        this.transitionYearText.classList.remove('show');
+        this.transitionYearText.textContent = '';
+        this.characterUser.style.animation = '';
+        this.characterGirlfriend.style.animation = '';
+        this.characterDog.style.animation = '';
+        this.characterUser.classList.remove('show');
+        this.characterGirlfriend.classList.remove('show');
+        this.characterDog.classList.remove('show');
+        
+        // Reset character positions and z-index
+        this.characterUser.style.transition = '';
+        this.characterGirlfriend.style.transition = '';
+        this.characterDog.style.transition = '';
+        this.characterUser.style.left = 'calc(50% + 150px)';
+        this.characterGirlfriend.style.left = '50%';
+        this.characterDog.style.left = 'calc(50% - 150px)';
+        this.characterUser.style.zIndex = '12';
+        this.characterGirlfriend.style.zIndex = '11';
+        this.characterDog.style.zIndex = '10';
+        
+        // Reset character visibility 
+        this.characterGirlfriend.style.opacity = '1';
+        this.characterDog.style.opacity = '1';
         
         // Reset button, stars, and traveling stars
         this.playButton.disabled = false;
@@ -527,6 +986,18 @@ class AnniversaryAnimation {
         // Stop and reset music
         this.backgroundMusic.pause();
         this.backgroundMusic.currentTime = 0;
+        
+        // Stop snow effect
+        this.stopSnow();
+        
+        // Reset to initial seasonal decorations (June flowers)
+        this.updateSeasonalDecorations(1);
+        
+        // Reset ground animation
+        const groundPlatform = document.getElementById('ground-platform');
+        if (groundPlatform) {
+            groundPlatform.style.animationPlayState = 'running';
+        }
     }
 }
 
